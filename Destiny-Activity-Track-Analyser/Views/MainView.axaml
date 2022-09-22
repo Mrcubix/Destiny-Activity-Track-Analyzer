@@ -11,5 +11,8 @@
     <viewModels:MainViewModel />
   </Design.DataContext>
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <Panel>
+    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Button Command="{Binding Remote.ShowView}" CommandParameter="MainView" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">Go to List Page 0</Button>
+  </Panel>
 </UserControl>

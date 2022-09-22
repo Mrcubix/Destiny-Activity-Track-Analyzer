@@ -1,0 +1,3 @@
+[submodule ".modules\\Destiny2.NET"]
+	path = .modules\\Destiny2.NET
+	url = https://github.com/Mrcubix/Destiny2.NET.git

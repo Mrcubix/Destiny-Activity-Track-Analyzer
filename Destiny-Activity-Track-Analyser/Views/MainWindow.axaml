@@ -8,5 +8,8 @@
         x:Class="Tracker.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Tracker">
-        <views:MainView />
+        
+        <Grid>
+                <ContentControl Content="{Binding Remote.CurrentViewModel}" />
+        </Grid>
 </Window>
