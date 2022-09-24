@@ -9,24 +9,26 @@ namespace Tracker.ViewModels
     {
         public Destiny2 API { get; }
 
-        private DestinyCharacterComponent _character;
+        private DestinyCharacterComponent _character = null!;
         public DestinyCharacterComponent Character
         {
             get => _character;
             set => this.RaiseAndSetIfChanged(ref _character, value);
         }
 
-        private DestinyCharacterActivitiesComponent _activity;
+        private DestinyCharacterActivitiesComponent _activity = null!;
         public DestinyCharacterActivitiesComponent CurrentActivity
         {
             get => _activity;
             set => this.RaiseAndSetIfChanged(ref _activity, value);
         }
 
+
         public CurrentActivityViewModel(Destiny2 api)
         {
             API = api;
         }
+
 
         public void GetActivityFromDefinition(long activityHash)
         {
