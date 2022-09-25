@@ -1,4 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using API;
+using API.Endpoints;
 using API.Entities.Definitions;
 
 namespace Tracker.Shared.Backend
@@ -12,6 +16,14 @@ namespace Tracker.Shared.Backend
         public static void LoadActivityDefinitions()
         {
 
+        }
+
+        public static async Task UpdateDefinitions()
+        {
+            var api = new Destiny2(SharedSettingsStore.Settings.APISettings);
+            var manifest = await api.GetDestinyManifest();
+            var definitionDBURL = manifest.MobileWorldContentPaths;
+            var serializedDefinitionDB = await api.SendRequest("GET", new Uri($"Bungie.net{definitionDBURL}"));
         }
     }
 }
