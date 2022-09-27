@@ -1,6 +1,4 @@
-﻿using System;
-using API.Endpoints;
-using Tracker.Shared;
+﻿using API.Endpoints;
 
 namespace Tracker.ViewModels
 {
@@ -13,19 +11,16 @@ namespace Tracker.ViewModels
         {
             Remote.AddVM(this);
 
-            SharedSettingsStore.LoadSettings();
-            API = new(SharedSettingsStore.Settings.APISettings);
+            Remote.SharedStores = new(this);
+
+            API = new(Remote.SharedStores.SettingsStore.Settings.APISettings);
 
             Remote.AddVM(new CurrentActivityViewModel(API));
 
-
-            Remote.CurrentViewModel = this;
-        }
-
-        public void LoadAPISettings()
-        {
+            var sharedDefinitionsStore = Remote.SharedStores.DefinitionsStore;
             
+            sharedDefinitionsStore.Initialize();
+            sharedDefinitionsStore.LoadDefinitions();
         }
-
     }
 }

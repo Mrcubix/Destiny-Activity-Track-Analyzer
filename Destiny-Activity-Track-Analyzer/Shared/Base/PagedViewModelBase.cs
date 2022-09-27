@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace Tracker.Shared.Frontend
+namespace Tracker.Shared.Base
 {
     public interface PagedViewModelBase
     {

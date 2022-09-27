@@ -2,14 +2,15 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace Tracker.Shared.Backend
+namespace Tracker.Shared.Static
 {
     public static class SharedPlatformSpecificVariables
     {
-        public static OSPlatform Platform = GetPlatform();
-        public static string BaseDir = Path.Combine(GetLocalAppdataPath(), "DATA");
-        public static string SettingsPath = Path.Combine(BaseDir, "Settings.json");
-        public static string DefinitionsDir = Path.Combine(BaseDir, "json", "Definitions");
+        public static OSPlatform Platform { get; } = GetPlatform();
+        public static string BaseDir { get; } = Path.Combine(GetLocalAppdataPath(), "DATA");
+        public static string SettingsPath { get; } = Path.Combine(BaseDir, "Settings.json");
+        public static string DefinitionsDir { get; } = Path.Combine(BaseDir, "json", "Definitions");
+        public static string TempDir { get; } = Path.Combine(BaseDir, "temp");
 
         public static OSPlatform GetPlatform()
         {

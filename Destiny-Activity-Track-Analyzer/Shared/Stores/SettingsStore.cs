@@ -1,15 +1,17 @@
 using System;
 using System.IO;
 using System.Text.Json;
-using Tracker.Shared.Backend;
+using Tracker.Shared.Static;
+using Tracker.Shared.Stores.Component;
+using Tracker.ViewModels;
 
-namespace Tracker.Shared
+namespace Tracker.Shared.Stores
 {
-    public static class SharedSettingsStore
+    public class SettingsStore
     {
-        public static AppSettings Settings { get; set; } = new();
+        public AppSettings Settings { get; set; } = new();
 
-        public static void LoadSettings()
+        public void LoadSettings(ViewModelBase defaultViewModel)
         {
             if (!Directory.Exists(SharedPlatformSpecificVariables.BaseDir))
                 Directory.CreateDirectory(SharedPlatformSpecificVariables.BaseDir);
@@ -20,7 +22,7 @@ namespace Tracker.Shared
                 
                 try
                 {
-                    Settings = JsonSerializer.Deserialize<AppSettings>(serializedSettings) ?? throw new JsonException("Failed to deserialize settings");
+                    Settings = JsonSerializer.Deserialize<AppSettings>(serializedSettings, SharedSerializerOptions.SerializerReadOptions) ?? throw new JsonException("Failed to deserialize settings");
                     return;
                 }
                 catch(JsonException)
@@ -30,8 +32,10 @@ namespace Tracker.Shared
                 }
             }
 
-            File.Create(SharedPlatformSpecificVariables.SettingsPath);
             Settings = new();
+            Settings.UXSettings.DefaultViewModelName = defaultViewModel.GetType().Name;
+            Settings.APISettings.MaxRetries = 3;
+            File.WriteAllText(SharedPlatformSpecificVariables.SettingsPath, JsonSerializer.Serialize(Settings, SharedSerializerOptions.SerializerWriteOptions));
         }
     }
 }

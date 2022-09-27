@@ -28,7 +28,7 @@ namespace Tracker.ViewModels
         {
             API = api;
         }
-
+        
 
         public void GetActivityFromDefinition(long activityHash)
         {

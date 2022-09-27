@@ -1,7 +1,7 @@
 using API;
-using Tracker.Shared.Backend;
+using Tracker.Shared.Stores.Component;
 
-namespace Tracker.Shared
+namespace Tracker.Shared.Stores.Component
 {
     public class AppSettings
     {
