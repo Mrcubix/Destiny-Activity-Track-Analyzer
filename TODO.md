@@ -4,7 +4,8 @@
 - [ ] Implement NavHeader View
 - [ ] Implement HomePage View
 - [ ] Implement Settings View
-- [ ] Implement CurrentActivity View
+- [-] Implement CurrentActivity View
+    - [ ] Test CurrentActivity View (Whenever i'm back, oh wait)
 - [ ] Implement ActivityTracks View
     - [ ] Implement TrackAnalysis View
 - [ ] Implement ActivityHistory View

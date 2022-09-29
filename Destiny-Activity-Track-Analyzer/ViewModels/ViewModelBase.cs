@@ -5,7 +5,7 @@ namespace Tracker.ViewModels
 {
     public class ViewModelBase : ReactiveObject
     {
-        private ViewRemote remote;
+        private ViewRemote remote = null!;
 
         public ViewRemote Remote
         {
@@ -13,10 +13,7 @@ namespace Tracker.ViewModels
             set => this.RaiseAndSetIfChanged(ref remote, value);
         }
         
-        public ViewModelBase()
-        {
-            remote = new();
-        }
+        public ViewModelBase() {}
 
         public ViewModelBase(ViewModelBase initialVM) 
         {

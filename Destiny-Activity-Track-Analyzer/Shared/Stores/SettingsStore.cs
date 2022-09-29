@@ -1,15 +1,21 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using ReactiveUI;
 using Tracker.Shared.Static;
 using Tracker.Shared.Stores.Component;
 using Tracker.ViewModels;
 
 namespace Tracker.Shared.Stores
 {
-    public class SettingsStore
+    public class SettingsStore : ReactiveObject
     {
-        public AppSettings Settings { get; set; } = new();
+        private AppSettings _settings = new();
+        public AppSettings Settings
+        {
+            get => _settings;
+            set => this.RaiseAndSetIfChanged(ref _settings, value);
+        }
 
         public void LoadSettings(ViewModelBase defaultViewModel)
         {
@@ -35,6 +41,8 @@ namespace Tracker.Shared.Stores
             Settings = new();
             Settings.UXSettings.DefaultViewModelName = defaultViewModel.GetType().Name;
             Settings.APISettings.MaxRetries = 3;
+            this.RaisePropertyChanged("Settings");
+
             File.WriteAllText(SharedPlatformSpecificVariables.SettingsPath, JsonSerializer.Serialize(Settings, SharedSerializerOptions.SerializerWriteOptions));
         }
     }

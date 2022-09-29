@@ -9,13 +9,13 @@ namespace Tracker.ViewModels
 
         public MainViewModel()
         {
-            Remote.AddVM(this);
-
+            Remote = new();
             Remote.SharedStores = new(this);
+            Remote.AddVM(this);
 
             API = new(Remote.SharedStores.SettingsStore.Settings.APISettings);
 
-            Remote.AddVM(new CurrentActivityViewModel(API));
+            Remote.AddVM(new CurrentActivityViewModel(API, Remote));
 
             var sharedDefinitionsStore = Remote.SharedStores.DefinitionsStore;
             

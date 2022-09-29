@@ -4,15 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Tracker.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Tracker.Views.MainView"
+             x:Class="Tracker.Views.CurrentActivityView"
              Foreground="White">
   <Design.DataContext>
-    <viewModels:MainViewModel />
+    <viewModels:CurrentActivityViewModel />
   </Design.DataContext>
 
   <Panel>
     <TextBlock Text="DATA is Currently Updating manifests" Margin="0,0,0,100" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding Remote.SharedStores.DefinitionsStore.IsUpdating}"/>
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    <Button Command="{Binding Remote.ShowView}" CommandParameter="CurrentActivityViewModel" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">Go to List Page 0</Button>
+    <Button Command="{Binding Remote.ShowView}" CommandParameter="MainViewModel" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">Go back to Homepage</Button>
   </Panel>
 </UserControl>

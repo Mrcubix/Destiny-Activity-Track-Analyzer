@@ -52,7 +52,7 @@ namespace Tracker.Shared.Stores
             };
         }
 
-        public async Task LoadDefinitions()
+        public void LoadDefinitions()
         {
             foreach(var definition in Definitions)
             {
@@ -62,18 +62,21 @@ namespace Tracker.Shared.Stores
                 }
                 catch(InvalidDataException)
                 {
-                    await UpdateDefinitions();
+                    _ = Task.Run(UpdateDefinitions);
                 }
                 catch(FileNotFoundException)
                 {
-                    await UpdateDefinitions();
+                    _ = Task.Run(UpdateDefinitions);
                 }
             }
         }
 
+        // Method is async because using the GetAwaiter() method cause the method call to never end;
         public async Task UpdateDefinitions()
         {
             var api = new Destiny2(settingsStore.Settings.APISettings);
+
+            Console.WriteLine("Fetching manifests...");
             var manifest = await api.GetDestinyManifest();
             var definitionDBURL = manifest.MobileWorldContentPaths;
 
@@ -84,8 +87,9 @@ namespace Tracker.Shared.Stores
 
             try
             {
-                // Allow language changes later on
-                ms = new MemoryStream(await api.SendRequest(new Uri($"https://bungie.net{definitionDBURL["en"]}")));
+                // TODO: Allow language changes later on
+                byte[] bytes = await api.SendRequest(new Uri($"https://bungie.net{definitionDBURL["en"]}"));
+                ms = new MemoryStream(bytes);
             }
             catch(Exception E)
             {
@@ -119,6 +123,7 @@ namespace Tracker.Shared.Stores
             SqliteConnection.ClearAllPools();
 
             File.Delete(Path.Combine(SharedPlatformSpecificVariables.TempDir, "DestinyManifest.sqlite3"));
+            Console.WriteLine("Definition Update Complete");
             IsUpdating = false;
         }
     }

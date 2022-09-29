@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
 using API.Endpoints;
 using API.Entities.Characters;
+using API.Entities.Definitions;
 using ReactiveUI;
+using Tracker.Shared.Frontend;
 
 namespace Tracker.ViewModels
 {
@@ -16,32 +18,49 @@ namespace Tracker.ViewModels
             set => this.RaiseAndSetIfChanged(ref _character, value);
         }
 
-        private DestinyCharacterActivitiesComponent _activity = null!;
-        public DestinyCharacterActivitiesComponent CurrentActivity
+        private DestinyActivityDefinition _currentActivity = null!;
+        public DestinyActivityDefinition CurrentActivity
         {
-            get => _activity;
-            set => this.RaiseAndSetIfChanged(ref _activity, value);
+            get => _currentActivity;
+            set => this.RaiseAndSetIfChanged(ref _currentActivity, value);
         }
 
 
         public CurrentActivityViewModel(Destiny2 api)
         {
             API = api;
+
+            _ = Task.Run(StartTrackingCurrentActivity);
         }
-        
 
-        public void GetActivityFromDefinition(long activityHash)
+        public CurrentActivityViewModel(ViewRemote remote)
         {
+            API = new(remote.SharedStores.SettingsStore.Settings.APISettings);
+            Remote = remote;
 
+            _ = Task.Run(StartTrackingCurrentActivity);
+        }
+
+        public CurrentActivityViewModel(Destiny2 api, ViewRemote remote)
+        {
+            API = api;
+            Remote = remote;
+
+            _ = Task.Run(StartTrackingCurrentActivity);
         }
 
         public async Task StartTrackingCurrentActivity()
         {
+            var items = Remote.SharedStores.DefinitionsStore.ActivityDefinitions.Items;
+
             while(true)
             {
                 await Task.Delay(1000);
 
-                CurrentActivity = await API.GetCurrentActivity(Character.MembershipType, Character.GetMembershipId(), Character.GetCharacterId());
+                var activities = await API.GetCurrentActivity(Character.MembershipType, Character.GetMembershipId(), Character.GetCharacterId());
+
+                if (activities.CurrentActivityHash != 0 && items.ContainsKey(activities.CurrentActivityHash))
+                    CurrentActivity = items[activities.CurrentActivityHash];
             }
         }
     }

@@ -17,7 +17,7 @@ namespace Tracker.Shared.Stores.Component
 
     public class Definition<T> : ReactiveObject, IDefinition<T> where T : DestinyDefinition
     {
-        private Dictionary<ulong, T> Items { get; set; } = new();
+        public Dictionary<uint, T> Items { get; set; } = new();
         public string Name { get; set; } = "";
         public string FilePath { get; set; } = "";
 
