@@ -10,7 +10,7 @@ namespace Tracker.Shared.Stores.Component
     {
         private UserInfoCard _userInfo = new();
         private long _defaultCharacter;
-        private List<DestinyCharacterComponent> _characters = new();
+        private Dictionary<long, DestinyCharacterComponent> _characters = new();
         private string _defaultViewModelName = "";
         private Dictionary<DestinyComponentType, bool> _componentVisibility = new();
         private int _tracksPerPage = 10;
@@ -31,7 +31,7 @@ namespace Tracker.Shared.Stores.Component
         }
 
         // TODO: Default values should be stored in a different file (defaults.json) and serialized under the DefaultValues class
-        public List<DestinyCharacterComponent> Characters
+        public Dictionary<long, DestinyCharacterComponent> Characters
         {
             get => _characters;
             set => this.RaiseAndSetIfChanged(ref _characters, value);

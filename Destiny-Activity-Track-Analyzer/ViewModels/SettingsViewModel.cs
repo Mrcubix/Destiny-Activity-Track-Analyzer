@@ -17,7 +17,13 @@ namespace Tracker.ViewModels
         public SettingsViewModel(ViewRemote remote)
         {
             Remote = remote;
-            Settings = remote.SharedStores.SettingsStore.Settings;
+            Settings = Remote.SharedStores.SettingsStore.Settings;
+        }
+
+        public void Save()
+        {
+            this.RaiseAndSetIfChanged(ref _settings, _settings);
+            Remote.SharedStores.SettingsStore.SaveSettings();
         }
     }
 }

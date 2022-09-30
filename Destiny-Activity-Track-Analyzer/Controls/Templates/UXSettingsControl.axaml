@@ -10,7 +10,8 @@
     <Setter Property="Template">
       <ControlTemplate>
         <StackPanel Margin="20 0 15 0">
-          <TextBlock Text="Page DATA should display on Startup: " />
+
+          <TextBlock Text="Startup Page" Margin="0 0 0 10"/>
           <ComboBox SelectedIndex="0">
             <ItemsControl Items="{Binding Remote.ViewModelNames}">
               <ItemsControl.ItemTemplate>
@@ -21,26 +22,13 @@
             </ItemsControl>
           </ComboBox>
 
-          <TextBlock Text="Tracks Per Pages:" />
-          <NumericUpDown Value="{Binding Settings.UXSettings.TracksPerPage}" Increment="1" Width="150"/>
+          <TextBlock Text="Tracks Per Pages" Margin="0 20 0 10" />
+          <NumericUpDown Value="{Binding Settings.UXSettings.TracksPerPage}" Increment="1" HorizontalAlignment="Left" Width="150"/>
 
-          <TextBlock Text="Activities Per Pages:" />
-          <NumericUpDown Value="{Binding Settings.UXSettings.ActivitiesPerPage}" Increment="1" Width="150"/>
-
-          <TextBlock Text="API Key" />
-          <TextBox Text="{Binding Settings.APISettings.Key}" 
-                   PasswordChar="*"
-                   ToolTip.Tip="Please do not show this on stream"
-                   Width="320"
-                   HorizontalAlignment="Left"/>
-
-          <TextBlock Text="User Information" />
-          <StackPanel Orientation="Horizontal">
-            <TextBox Watermark="Username" Text="{Binding Settings.APISettings.Username}" Width="320"/>
-            <NumericUpDown Value="{Binding Settings.APISettings.Tag}" Increment="1" Minimum="0000" Maximum="9999" Width="120"/>
-          </StackPanel>
+          <TextBlock Text="Activities Per Pages" Margin="0 20 0 10" />
+          <NumericUpDown Value="{Binding Settings.UXSettings.ActivitiesPerPage}" Increment="1" HorizontalAlignment="Left" Width="150"/>
           
-          <TextBlock Text="Default Character"/>
+          <TextBlock Text="Default Character" Margin="0 20 0 10" />
           <ComboBox SelectedIndex="0">
             <ItemsControl Items="{Binding UXSettings.Characters}">
               <ItemsControl.ItemTemplate>

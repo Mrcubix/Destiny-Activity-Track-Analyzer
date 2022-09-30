@@ -1,0 +1,33 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Tracker.Controls.Templates">
+  <Design.PreviewWith>
+    <controls:APISettingsControl />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|APISettingsControl">
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel Margin="20 0 0 0">
+          <TextBlock Text="API Key" Margin="0 0 0 10"/>
+          <TextBox Watermark="API Key"
+                   Text="{Binding Settings.APISettings.Key}" 
+                   PasswordChar="*"
+                   ToolTip.Tip="Please do not show this on stream"
+                   Width="320"
+                   HorizontalAlignment="Left"/>
+
+          <TextBlock Text="User Information" Margin="0 20 0 10"/>
+          <StackPanel Orientation="Horizontal">
+            <TextBox Watermark="Username" Text="{Binding Settings.APISettings.Username}" Width="320"/>
+            <NumericUpDown Value="{Binding Settings.APISettings.Tag}" Increment="1" Minimum="0" Maximum="9999" Width="120"/>
+          </StackPanel>
+
+          <TextBlock Text="Number of retries" Margin="0 20 0 10"/>
+          <NumericUpDown Value="{Binding Settings.APISettings.MaxRetries}" Increment="1" Minimum="1" HorizontalAlignment="Left" Width="120"/>
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

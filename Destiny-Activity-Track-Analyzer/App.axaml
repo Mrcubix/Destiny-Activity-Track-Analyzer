@@ -8,6 +8,7 @@
 
     <Application.Styles>
         <StyleInclude Source="/Controls/Templates/UXSettingsControl.axaml" />
+        <StyleInclude Source="/Controls/Templates/APISettingsControl.axaml" />
     </Application.Styles>
 
     <Application.Styles>

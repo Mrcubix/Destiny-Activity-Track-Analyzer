@@ -18,7 +18,7 @@
     <TextBlock Text="UX Settings" FontSize="16" Margin="10" />
     <Panel>
       <!-- UX Settings Section -->
-
+      <templates:APISettingsControl />
     </Panel>
 
     <!-- API Setting Header -->
@@ -29,6 +29,6 @@
         <templates:UXSettingsControl />
     </Panel>
     
-    <Button Command="{Binding Remote.ShowView}" CommandParameter="MainViewModel" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">Go back to Homepage</Button>
+    <Button Command="{Binding Save}" HorizontalAlignment="Center" VerticalAlignment="Center">Save</Button>
   </StackPanel>
 </UserControl>
