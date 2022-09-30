@@ -44,6 +44,10 @@ namespace Tracker.Shared.Stores.Component
 
             if (definitions == null)
                 throw new InvalidDataException("Definition file is invalid");
+
+            Items = definitions;
+
+            Console.WriteLine($"Loaded {Items.Count} {Name} definitions");
         }
 
         public void UpdateDefinition(SqliteConnection db)

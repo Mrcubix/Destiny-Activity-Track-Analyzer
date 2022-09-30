@@ -1,4 +1,6 @@
-﻿using API.Endpoints;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using API.Endpoints;
 
 namespace Tracker.ViewModels
 {
@@ -15,13 +17,14 @@ namespace Tracker.ViewModels
 
             API = new(Remote.SharedStores.SettingsStore.Settings.APISettings);
 
-            Remote.AddVM(new CurrentActivityViewModel(API, Remote));
-            Remote.AddVM(new SettingsViewModel(Remote));
-
             var sharedDefinitionsStore = Remote.SharedStores.DefinitionsStore;
             
             sharedDefinitionsStore.Initialize();
             sharedDefinitionsStore.LoadDefinitions();
+            _ = Task.Run(Remote.SharedStores.SettingsStore.Refresh);
+
+            Remote.AddVM(new CurrentActivityViewModel(API, Remote));
+            Remote.AddVM(new SettingsViewModel(Remote));
         }
     }
 }

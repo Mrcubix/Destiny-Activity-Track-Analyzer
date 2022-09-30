@@ -10,8 +10,7 @@
     <viewModels:CurrentActivityViewModel />
   </Design.DataContext>
 
-  <Panel>
-    <TextBlock Text="DATA is Currently Updating manifests" Margin="0,0,0,100" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding Remote.SharedStores.DefinitionsStore.IsUpdating}"/>
-    <Button Command="{Binding Remote.ShowView}" CommandParameter="MainViewModel" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">Go back to Homepage</Button>
-  </Panel>
+  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+    <TextBlock Text="{Binding CurrentActivity.DisplayProperties.Name, FallbackValue='Not in Activity'}" />
+  </StackPanel>
 </UserControl>

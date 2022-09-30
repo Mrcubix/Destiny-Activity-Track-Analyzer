@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using API.Endpoints;
 using API.Entities.Characters;
@@ -57,10 +58,18 @@ namespace Tracker.ViewModels
             {
                 await Task.Delay(1000);
 
-                var activities = await API.GetCurrentActivity(Character.MembershipType, Character.GetMembershipId(), Character.GetCharacterId());
+                if (Character != null)
+                {
+                    var activities = await API.GetCurrentActivity(Character.MembershipType, Character.GetMembershipId(), Character.GetCharacterId());
 
-                if (activities.CurrentActivityHash != 0 && items.ContainsKey(activities.CurrentActivityHash))
-                    CurrentActivity = items[activities.CurrentActivityHash];
+                    if (activities.CurrentActivityHash != 0 && items.ContainsKey(activities.CurrentActivityHash))
+                        CurrentActivity = Remote.SharedStores.DefinitionsStore.ActivityDefinitions.Items[activities.CurrentActivityHash];
+                }
+                else
+                {
+                    if (Remote.SharedStores.SettingsStore.Settings.UXSettings.Characters.Count != 0)
+                        Character = Remote.SharedStores.SettingsStore.Settings.UXSettings.Characters.Values.ElementAt(0);
+                }
             }
         }
     }
