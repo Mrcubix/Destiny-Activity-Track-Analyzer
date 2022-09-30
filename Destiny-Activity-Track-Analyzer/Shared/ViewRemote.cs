@@ -70,6 +70,9 @@ namespace Tracker.Shared.Frontend
 
         public void AddVM(ViewModelBase vm, string name)
         {
+            if (_viewModelNames.Contains(name))
+                return;
+
             ViewModels.Add(vm);
             ViewModelNames.Add(name);
 

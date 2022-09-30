@@ -1,16 +1,28 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Tracker.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="clr-namespace:Tracker.Views"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Tracker.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="Tracker"
+<Window xmlns="https://github.com/avaloniaui" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:vm="using:Tracker.ViewModels" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:views="clr-namespace:Tracker.Views" 
+        x:Class="Tracker.Views.MainWindow" 
+        d:DesignWidth="800" d:DesignHeight="450" 
+        Icon="/Assets/avalonia-logo.ico" 
+        mc:Ignorable="d"
+        Title="Tracker" 
         Background="#171C2C">
-        
-        <Grid>
-                <ContentControl Content="{Binding Remote.CurrentViewModel}" />
-        </Grid>
+
+    <Grid ShowGridLines="true">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5.5*" />
+            <RowDefinition Height="94.5*" />
+        </Grid.RowDefinitions>
+        <!-- Back Button --> <!-- NavBar -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Button Command="{Binding Remote.ShowView}" CommandParameter="MainViewModel" VerticalAlignment="Center">Home</Button>
+            <Button Command="{Binding Remote.ShowView}" CommandParameter="CurrentActivityViewModel" VerticalAlignment="Center">Current</Button>
+            <Button Command="{Binding Remote.ShowView}" CommandParameter="SettingsViewModel" VerticalAlignment="Center">Settings</Button>
+        </StackPanel>
+        <TextBlock Text="DATA is Currently Updating manifests" Margin="0,0,0,100" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="{Binding Remote.SharedStores.DefinitionsStore.IsUpdating}"/>
+        <ContentControl Content="{Binding Remote.CurrentViewModel}" Grid.Row="1"/>
+    </Grid>
 </Window>

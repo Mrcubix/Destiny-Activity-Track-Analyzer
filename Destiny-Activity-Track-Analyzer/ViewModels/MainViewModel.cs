@@ -16,6 +16,7 @@ namespace Tracker.ViewModels
             API = new(Remote.SharedStores.SettingsStore.Settings.APISettings);
 
             Remote.AddVM(new CurrentActivityViewModel(API, Remote));
+            Remote.AddVM(new SettingsViewModel(Remote));
 
             var sharedDefinitionsStore = Remote.SharedStores.DefinitionsStore;
             
