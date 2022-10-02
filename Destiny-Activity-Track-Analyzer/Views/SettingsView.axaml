@@ -12,7 +12,7 @@
     <viewModels:SettingsViewModel />
   </Design.DataContext>
 
-  <StackPanel>
+  <StackPanel >
     <TextBlock Text="Settings" FontSize="24" Margin="10" />
     <!-- UX Settings Header -->
     <TextBlock Text="UX Settings" FontSize="16" Margin="10" />

@@ -11,6 +11,7 @@
   </Design.DataContext>
 
   <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
     <TextBlock Text="{Binding CurrentActivity.DisplayProperties.Name, FallbackValue='Not in Activity'}" />
   </StackPanel>
 </UserControl>

@@ -36,8 +36,27 @@ namespace Tracker.Shared.Stores
             get => _activityDefinitions;
             set => this.RaiseAndSetIfChanged(ref _activityDefinitions, value);
         }
-        //public static Dictionary<long, DestinyActivityModeDefinition> ActivityModeDefinitions { get; set; } = new();
-        //public static Dictionary<long, DestinyActivityTypeDefinition> ActivityTypeDefinitions { get; set; } = new();
+
+        private Definition<DestinyActivityModeDefinition> _activityModeDefinitions = new("DestinyActivityModeDefinition");
+        public Definition<DestinyActivityModeDefinition> ActivityModeDefinitions 
+        {
+            get => _activityModeDefinitions;
+            set => this.RaiseAndSetIfChanged(ref _activityModeDefinitions, value);
+        }
+
+        private Definition<DestinyActivityTypeDefinition> _activityTypeDefinitions = new("DestinyActivityTypeDefinition");
+        public Definition<DestinyActivityTypeDefinition> ActivityTypeDefinitions 
+        {
+            get => _activityTypeDefinitions;
+            set => this.RaiseAndSetIfChanged(ref _activityTypeDefinitions, value);
+        }
+
+        private Definition<DestinyClassDefinition> _classDefinitions = new("DestinyClassDefinition");
+        public Definition<DestinyClassDefinition> ClassDefinitions 
+        {
+            get => _classDefinitions;
+            set => this.RaiseAndSetIfChanged(ref _classDefinitions, value);
+        }
 
         public DefinitionsStore(SettingsStore settings)
         {
@@ -48,11 +67,14 @@ namespace Tracker.Shared.Stores
         {
             Definitions = new()
             {
-                ["DestinyActivityDefinition"] = ActivityDefinitions
+                ["DestinyActivityDefinition"] = ActivityDefinitions,
+                ["DestinyActivityModeDefinition"] = ActivityModeDefinitions,
+                ["DestinyActivityTypeDefinition"] = ActivityTypeDefinitions,
+                ["DestinyClassDefinition"] = ClassDefinitions
             };
         }
 
-        public void LoadDefinitions()
+        public async Task LoadDefinitions()
         {
             foreach(var definition in Definitions)
             {
@@ -62,11 +84,11 @@ namespace Tracker.Shared.Stores
                 }
                 catch(InvalidDataException)
                 {
-                    _ = Task.Run(UpdateDefinitions);
+                    await UpdateDefinitions();
                 }
                 catch(FileNotFoundException)
                 {
-                    _ = Task.Run(UpdateDefinitions);
+                    await UpdateDefinitions();
                 }
             }
         }

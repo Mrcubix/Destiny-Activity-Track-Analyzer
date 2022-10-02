@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Endpoints;
@@ -10,7 +11,7 @@ namespace Tracker.ViewModels
 {
     public class CurrentActivityViewModel : ViewModelBase
     {
-        public Destiny2 API { get; }
+        public Destiny2 API { get; set; }
 
         private DestinyCharacterComponent _character = null!;
         public DestinyCharacterComponent Character
@@ -26,6 +27,7 @@ namespace Tracker.ViewModels
             set => this.RaiseAndSetIfChanged(ref _currentActivity, value);
         }
 
+        private Dictionary<uint, DestinyActivityDefinition> items => Remote.SharedStores.DefinitionsStore.ActivityDefinitions.Items;
 
         public CurrentActivityViewModel(Destiny2 api)
         {
@@ -52,8 +54,6 @@ namespace Tracker.ViewModels
 
         public async Task StartTrackingCurrentActivity()
         {
-            var items = Remote.SharedStores.DefinitionsStore.ActivityDefinitions.Items;
-
             while(true)
             {
                 await Task.Delay(1000);
@@ -63,7 +63,7 @@ namespace Tracker.ViewModels
                     var activities = await API.GetCurrentActivity(Character.MembershipType, Character.GetMembershipId(), Character.GetCharacterId());
 
                     if (activities.CurrentActivityHash != 0 && items.ContainsKey(activities.CurrentActivityHash))
-                        CurrentActivity = Remote.SharedStores.DefinitionsStore.ActivityDefinitions.Items[activities.CurrentActivityHash];
+                        CurrentActivity = items[activities.CurrentActivityHash];
                 }
                 else
                 {

@@ -9,7 +9,7 @@ namespace Tracker.Shared.Stores.Component
     public class UXSettings : ReactiveObject
     {
         private UserInfoCard _userInfo = new();
-        private long _defaultCharacter;
+        private DestinyCharacterComponent _defaultCharacter = null!;
         private Dictionary<long, DestinyCharacterComponent> _characters = new();
         private string _defaultViewModelName = "";
         private Dictionary<DestinyComponentType, bool> _componentVisibility = new();
@@ -24,7 +24,7 @@ namespace Tracker.Shared.Stores.Component
             set => this.RaiseAndSetIfChanged(ref _userInfo, value);
         }
         
-        public long DefaultCharacter
+        public DestinyCharacterComponent DefaultCharacter
         {
             get => _defaultCharacter;
             set => this.RaiseAndSetIfChanged(ref _defaultCharacter, value);

@@ -12,15 +12,7 @@
         <StackPanel Margin="20 0 15 0">
 
           <TextBlock Text="Startup Page" Margin="0 0 0 10"/>
-          <ComboBox SelectedIndex="0">
-            <ItemsControl Items="{Binding Remote.ViewModelNames}">
-              <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                  <ComboBoxItem Content="{Binding}" />
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
-          </ComboBox>
+          <ComboBox Items="{Binding Remote.ViewModelNames}" SelectedItem="{Binding Settings.UXSettings.DefaultViewModelName}"/>
 
           <TextBlock Text="Tracks Per Pages" Margin="0 20 0 10" />
           <NumericUpDown Value="{Binding Settings.UXSettings.TracksPerPage}" Increment="1" HorizontalAlignment="Left" Width="150"/>
@@ -29,16 +21,22 @@
           <NumericUpDown Value="{Binding Settings.UXSettings.ActivitiesPerPage}" Increment="1" HorizontalAlignment="Left" Width="150"/>
           
           <TextBlock Text="Default Character" Margin="0 20 0 10" />
-          <ComboBox SelectedIndex="0">
-            <ItemsControl Items="{Binding UXSettings.Characters}">
-              <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                  <ComboBoxItem Content="{Binding Light} {Binding ClassType}" />
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
+          <ComboBox Items="{Binding Settings.UXSettings.Characters.Values}" SelectedItem="{Binding Settings.UXSettings.DefaultCharacter}" Width="320">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <ComboBoxItem>
+                  <ComboBoxItem.Content>
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock Text="{Binding Light}" />
+                      <TextBlock Text=" - " />
+                      <TextBlock Text="{Binding $parent[ComboBox].DataContext.Remote.SharedStores.DefinitionsStore.ClassDefinitions.Items[ClassHash].ClassType}" />
+                    </StackPanel>
+                  </ComboBoxItem.Content>
+                </ComboBoxItem>
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
           </ComboBox>
-
+          
         </StackPanel>
       </ControlTemplate>
     </Setter>
