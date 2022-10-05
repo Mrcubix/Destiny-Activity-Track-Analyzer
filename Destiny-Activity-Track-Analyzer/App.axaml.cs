@@ -1,12 +1,9 @@
-using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using API.Endpoints;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
+using Tracker.Shared.Converters;
 using Tracker.Shared.Frontend;
 using Tracker.ViewModels;
 using Tracker.Views;
@@ -33,8 +30,6 @@ namespace Tracker
                 {
                     DataContext = context
                 };
-
-                context = (MainViewModel)desktop.MainWindow.DataContext;
             }
             else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
             {
@@ -46,29 +41,13 @@ namespace Tracker
 
             Remote.AddVM(context);
             Remote.SharedStores = new(context);
+            Remote.SharedStores.Initialize();
 
             API = new(Remote.SharedStores.SettingsStore.Settings.APISettings);
 
-            _ = Task.Run(LoadRessources);
+            _ = Task.Run(LoadStore);
             LoadViewModels();
-
-            var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-
-            var assemblyName = Assembly.GetExecutingAssembly().GetName().Name; // Destiny-Activity-Track-Analyzer
-
-            var pathResmProject = new Uri($"resm:{assemblyName}/Assets");
-            var pathAveresProject = new Uri($"averes://{assemblyName}/Assets");
-
-            var resmProject = assets.GetAssets(pathResmProject, null);
-            var averesProject = assets.GetAssets(pathAveresProject, null);
-
-            var ressourcesNames = Assembly.GetExecutingAssembly().GetManifestResourceNames(); // ["!AvaloniaResources"]
-
-            var pathResmRessources = new Uri($"resm:{ressourcesNames[0]}/Assets");
-            var pathAveresRessources = new Uri($"averes:/{ressourcesNames[0].Replace("!", "")}/Assets");
-
-            var resmRessources = assets.GetAssets(pathResmRessources, null);
-            var averesRessources = assets.GetAssets(pathAveresRessources, null);
+            InitializeConverters();
 
             base.OnFrameworkInitializationCompleted();
         }
@@ -81,13 +60,16 @@ namespace Tracker
             Remote.ShowView(Remote.SharedStores.SettingsStore.Settings.UXSettings.DefaultViewModelName);
         }
 
-        public async Task LoadRessources()
+        public async Task LoadStore()
         {
-            var sharedDefinitionsStore = Remote.SharedStores.DefinitionsStore;
-            
-            sharedDefinitionsStore.Initialize();
-            await sharedDefinitionsStore.LoadDefinitions();
-            await Remote.SharedStores.SettingsStore.Refresh();
+            Remote.SharedStores.Load();
+
+            await Remote.SharedStores.SettingsStore.Update();
+        }
+
+        public void InitializeConverters()
+        {
+            ClassHashConverter.Remote = Remote;
         }
     }
 }

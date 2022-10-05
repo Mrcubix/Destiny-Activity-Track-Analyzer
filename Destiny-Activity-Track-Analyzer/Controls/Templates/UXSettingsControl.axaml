@@ -1,11 +1,18 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:Tracker.Controls.Templates">
+        xmlns:controls="using:Tracker.Controls.Templates"
+        xmlns:converters="using:Tracker.Shared.Converters">
+
   <Design.PreviewWith>
     <controls:UXSettingsControl />
   </Design.PreviewWith>
 
   <Style Selector="controls|UXSettingsControl">
+
+    <Style.Resources>
+      <converters:ClassHashConverter x:Key="ClassHashConverter" />
+    </Style.Resources>
+
     <!-- Set Defaults -->
     <Setter Property="Template">
       <ControlTemplate>
@@ -29,7 +36,7 @@
                     <StackPanel Orientation="Horizontal">
                       <TextBlock Text="{Binding Light}" />
                       <TextBlock Text=" - " />
-                      <TextBlock Text="{Binding $parent[ComboBox].DataContext.Remote.SharedStores.DefinitionsStore.ClassDefinitions.Items[ClassHash].ClassType}" />
+                      <TextBlock Text="{Binding ClassHash, Converter={StaticResource ClassHashConverter}}" />
                     </StackPanel>
                   </ComboBoxItem.Content>
                 </ComboBoxItem>

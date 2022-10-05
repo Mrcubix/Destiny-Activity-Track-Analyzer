@@ -11,7 +11,12 @@
   </Design.DataContext>
 
   <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+    <StackPanel IsEnabled="{Binding !Remote.SharedStores.SettingsStore.IsKeySet}">
+      <TextBlock Text="This feature requires an API key to be set." />
+      <!-- TODO: Create SetupView (see plans for details) -->
+      <Button Command="" >Go to Setup</Button>
+    </StackPanel>
 
-    <TextBlock Text="{Binding CurrentActivity.DisplayProperties.Name, FallbackValue='Not in Activity'}" />
+    <TextBlock Text="{Binding CurrentActivity.DisplayProperties.Name, FallbackValue='Not in Activity'}" IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}"/>
   </StackPanel>
 </UserControl>

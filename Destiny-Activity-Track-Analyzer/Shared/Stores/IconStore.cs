@@ -1,44 +1,40 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Security.Authentication;
-using System.Text.Json;
-using System.Threading.Tasks;
-using API.Endpoints;
-using API.Entities.User;
-using API.Enums;
+using System.Reflection;
 using Avalonia;
 using Avalonia.Platform;
 using ReactiveUI;
-using Tracker.Shared.Static;
-using Tracker.Shared.Stores.Component;
+using Tracker.Shared.Interfaces;
 
 namespace Tracker.Shared.Stores
 {
-    public class IconStore : ReactiveObject
+    public class IconStore : ReactiveObject, IStore
     {
-        Dictionary<uint, string> Icons { get; set; }
+        private IAssetLoader? AssetLoader { get; set; }
+        Dictionary<uint, string> Icons { get; set; } = new();
 
-        public void LoadIcons()
+        public void Initialize()
         {
-            if (!Directory.Exists(SharedPlatformSpecificVariables.BaseDir))
-                Directory.CreateDirectory(SharedPlatformSpecificVariables.BaseDir);
+            AssetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
+        }
 
-            if (File.Exists(SharedPlatformSpecificVariables.SettingsPath))
+        public void Load()
+        {
+            var assemblyName = Assembly.GetExecutingAssembly().GetName().Name; // Destiny-Activity-Track-Analyzer
+
+            if (AssetLoader == null)
+                throw new NullReferenceException("AssetLoader is null");
+
+            var assets = AssetLoader.GetAssets(new Uri($@"avares://{assemblyName}/Assets/Icons"), null);
+            
+            uint i = 0;
+            // TODO: Icons need to be associated with modes
+            foreach(Uri asset in assets)
             {
-                var serializedSettings = File.ReadAllText(SharedPlatformSpecificVariables.SettingsPath);
-                
-                try
-                {
-                    Icons = JsonSerializer.Deserialize<Dictionary<uint, string>>(serializedSettings, SharedSerializerOptions.SerializerReadOptions) ?? throw new JsonException("Failed to deserialize settings");
-                    return;
-                }
-                catch(JsonException)
-                {
-                    File.Move(SharedPlatformSpecificVariables.SettingsPath, Path.Combine(SharedPlatformSpecificVariables.BaseDir, "Settings.json.bak"), true);
-                    Console.WriteLine($"Settings file may be corrupted or invalid, a backup was created in {SharedPlatformSpecificVariables.BaseDir}");
-                }
+                Icons.Add(i++, asset.LocalPath);
             }
         }
+
+        public void Save() { }
     }
 }

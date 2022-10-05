@@ -12,23 +12,25 @@
     <viewModels:SettingsViewModel />
   </Design.DataContext>
 
-  <StackPanel >
-    <TextBlock Text="Settings" FontSize="24" Margin="10" />
-    <!-- UX Settings Header -->
-    <TextBlock Text="UX Settings" FontSize="16" Margin="10" />
-    <Panel>
-      <!-- UX Settings Section -->
-      <templates:APISettingsControl />
-    </Panel>
+  <ScrollViewer>
+    <StackPanel >
+      <TextBlock Text="Settings" FontSize="24" Margin="10" />
+      <!-- UX Settings Header -->
+      <TextBlock Text="UX Settings" FontSize="16" Margin="10" />
+      <Panel>
+        <!-- UX Settings Section -->
+        <templates:APISettingsControl />
+      </Panel>
 
-    <!-- API Setting Header -->
-    <TextBlock Text="API Settings" FontSize="16" Margin="10" />
+      <!-- API Setting Header -->
+      <TextBlock Text="API Settings" FontSize="16" Margin="10" />
 
-    <Panel>
-        <!-- API Settings Section -->
-        <templates:UXSettingsControl />
-    </Panel>
-    
-    <Button Command="{Binding Save}" HorizontalAlignment="Center" VerticalAlignment="Center">Save</Button>
-  </StackPanel>
+      <Panel>
+          <!-- API Settings Section -->
+          <templates:UXSettingsControl />
+      </Panel>
+      
+      <Button Command="{Binding Save}" HorizontalAlignment="Center" VerticalAlignment="Center">Save</Button>
+    </StackPanel>
+  </ScrollViewer>
 </UserControl>

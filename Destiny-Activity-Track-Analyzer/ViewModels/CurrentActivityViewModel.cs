@@ -6,6 +6,8 @@ using API.Entities.Characters;
 using API.Entities.Definitions;
 using ReactiveUI;
 using Tracker.Shared.Frontend;
+using Tracker.Shared.Stores;
+using Tracker.Shared.Stores.Component;
 
 namespace Tracker.ViewModels
 {
@@ -29,18 +31,12 @@ namespace Tracker.ViewModels
 
         private Dictionary<uint, DestinyActivityDefinition> items => Remote.SharedStores.DefinitionsStore.ActivityDefinitions.Items;
 
-        public CurrentActivityViewModel(Destiny2 api)
-        {
-            API = api;
-
-            _ = Task.Run(StartTrackingCurrentActivity);
-        }
-
         public CurrentActivityViewModel(ViewRemote remote)
         {
             API = new(remote.SharedStores.SettingsStore.Settings.APISettings);
             Remote = remote;
 
+            Initialize();
             _ = Task.Run(StartTrackingCurrentActivity);
         }
 
@@ -49,7 +45,14 @@ namespace Tracker.ViewModels
             API = api;
             Remote = remote;
 
+            Initialize();
             _ = Task.Run(StartTrackingCurrentActivity);
+        }
+
+        public void Initialize()
+        {
+            // Note: The issue is not that it assign the value, but that the reference becomes absolete
+            Remote.SharedStores.SettingsStore.SettingsUpdated += OnSettingsChange;
         }
 
         public async Task StartTrackingCurrentActivity()
@@ -58,7 +61,7 @@ namespace Tracker.ViewModels
             {
                 await Task.Delay(1000);
 
-                if (Character != null)
+                if (Character != null && !string.IsNullOrEmpty(API.settings.Key))
                 {
                     var activities = await API.GetCurrentActivity(Character.MembershipType, Character.GetMembershipId(), Character.GetCharacterId());
 
@@ -71,6 +74,11 @@ namespace Tracker.ViewModels
                         Character = Remote.SharedStores.SettingsStore.Settings.UXSettings.Characters.Values.ElementAt(0);
                 }
             }
+        }
+
+        public void OnSettingsChange(object? send, AppSettings settings)
+        {
+            this.API = new(settings.APISettings);
         }
     }
 }
