@@ -175,6 +175,10 @@ namespace Tracker.Shared.Stores
         /// </Summary>
         public void OnSettingsUpdateComplete(object? sender, AppSettings settings)
         {
+            var key = settings.APISettings.Key;
+
+            IsKeySet = !string.IsNullOrEmpty(key) && key.Length == 32;
+            
             Console.WriteLine($"Settings updated");
         }
     }
