@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Tracker.Shared.Interfaces;
 using Tracker.Shared.Stores;
 using Tracker.ViewModels;
@@ -11,19 +12,22 @@ namespace Tracker.Shared
 
         public DefinitionsStore DefinitionsStore { get; set; }
         public SettingsStore SettingsStore { get; set; }
+        public DefaultsStore DefaultsStore { get; set; }
         public IconStore IconStore { get; set; }
 
 
         public SharedStores()
         {
             SettingsStore = new();
+            DefaultsStore = new(SettingsStore);
             DefinitionsStore = new(SettingsStore);
             IconStore = new();
         }
 
         public SharedStores(ViewModelBase vm)
         {
-            SettingsStore = new(vm);
+            SettingsStore = new();
+            DefaultsStore = new(SettingsStore, vm);
             DefinitionsStore = new(SettingsStore);
             IconStore = new();
         }
@@ -37,6 +41,7 @@ namespace Tracker.Shared
             Stores.Add(SettingsStore);
             Stores.Add(DefinitionsStore);
             Stores.Add(IconStore);
+            Stores.Add(DefaultsStore);
 
             foreach(IStore store in Stores)
                 store.Initialize();
@@ -58,6 +63,12 @@ namespace Tracker.Shared
         {
             foreach(IStore store in Stores)
                 store.Save();
+        }
+
+        public void Update()
+        {
+            SettingsStore.Update();
+            _ = Task.Run(DefaultsStore.Update);
         }
     }
 }

@@ -39,6 +39,14 @@ namespace Tracker
                 };
             }
 
+            InitializeBackend(context);
+            InitializeFrontend();
+
+            base.OnFrameworkInitializationCompleted();
+        }
+
+        public void InitializeBackend(ViewModelBase context)
+        {
             Remote.AddVM(context);
             Remote.SharedStores = new(context);
             Remote.SharedStores.Initialize();
@@ -46,10 +54,19 @@ namespace Tracker
             API = new(Remote.SharedStores.SettingsStore.Settings.APISettings);
 
             _ = Task.Run(LoadStore);
+        }
+
+        public void InitializeFrontend()
+        {
             LoadViewModels();
             InitializeConverters();
+        }
 
-            base.OnFrameworkInitializationCompleted();
+        public async Task LoadStore()
+        {
+            Remote.SharedStores.Load();
+
+            await Remote.SharedStores.DefaultsStore.Update();
         }
 
         public void LoadViewModels()
@@ -57,19 +74,14 @@ namespace Tracker
             Remote.AddVM(new CurrentActivityViewModel(API, Remote));
             Remote.AddVM(new SettingsViewModel(Remote));
 
-            Remote.ShowView(Remote.SharedStores.SettingsStore.Settings.UXSettings.DefaultViewModelName);
-        }
-
-        public async Task LoadStore()
-        {
-            Remote.SharedStores.Load();
-
-            await Remote.SharedStores.SettingsStore.Update();
+            // Check if there are no characters in settings
+            Remote.ShowView(Remote.SharedStores.DefaultsStore.Defaults.DefaultViewModelName);
         }
 
         public void InitializeConverters()
         {
             ClassHashConverter.Remote = Remote;
+            CharacterToIndexConverter.Remote = Remote;
         }
     }
 }

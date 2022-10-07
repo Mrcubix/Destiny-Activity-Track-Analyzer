@@ -6,7 +6,6 @@ using API.Entities.Characters;
 using API.Entities.Definitions;
 using ReactiveUI;
 using Tracker.Shared.Frontend;
-using Tracker.Shared.Stores;
 using Tracker.Shared.Stores.Component;
 
 namespace Tracker.ViewModels
@@ -70,8 +69,8 @@ namespace Tracker.ViewModels
                 }
                 else
                 {
-                    if (Remote.SharedStores.SettingsStore.Settings.UXSettings.Characters.Count != 0)
-                        Character = Remote.SharedStores.SettingsStore.Settings.UXSettings.Characters.Values.ElementAt(0);
+                    if (Remote.SharedStores.DefaultsStore.Defaults.Characters.Count != 0)
+                        Character = Remote.SharedStores.DefaultsStore.Defaults.Characters.Values.ElementAt(0);
                 }
             }
         }
