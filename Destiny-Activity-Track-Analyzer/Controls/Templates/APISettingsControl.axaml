@@ -9,10 +9,10 @@
     <!-- Set Defaults -->
     <Setter Property="Template">
       <ControlTemplate>
-        <StackPanel Margin="20 0 0 0">
+        <StackPanel Margin="20 0 0 0" DataContext="{Binding SettingsStore.Settings.APISettings}">
           <TextBlock Text="API Key" Margin="0 0 0 10"/>
           <TextBox Watermark="API Key"
-                   Text="{Binding SettingsStore.Settings.APISettings.Key}" 
+                   Text="{Binding Key}" 
                    PasswordChar="*"
                    ToolTip.Tip="Please do not show this on stream"
                    Width="320"
@@ -20,12 +20,12 @@
 
           <TextBlock Text="User Information" Margin="0 20 0 10"/>
           <StackPanel Orientation="Horizontal">
-            <TextBox Watermark="Username" Text="{Binding SettingsStore.Settings.APISettings.Username}" Width="320"/>
-            <NumericUpDown Value="{Binding SettingsStore.Settings.APISettings.Tag}" Increment="1" Minimum="0" Maximum="9999" Width="120"/>
+            <TextBox Watermark="Username" Text="{Binding Username}" Width="320"/>
+            <NumericUpDown Value="{Binding Tag}" Increment="1" Minimum="0" Maximum="9999" Width="120"/>
           </StackPanel>
 
           <TextBlock Text="Number of retries" Margin="0 20 0 10"/>
-          <NumericUpDown Value="{Binding SettingsStore.Settings.APISettings.MaxRetries}" Increment="1" Minimum="1" HorizontalAlignment="Left" Width="120"/>
+          <NumericUpDown Value="{Binding MaxRetries}" Increment="1" Minimum="1" HorizontalAlignment="Left" Width="120"/>
         </StackPanel>
       </ControlTemplate>
     </Setter>

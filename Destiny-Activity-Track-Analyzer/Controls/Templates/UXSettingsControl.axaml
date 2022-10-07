@@ -17,16 +17,18 @@
     <!-- Set Defaults -->
     <Setter Property="Template">
       <ControlTemplate>
-        <StackPanel Margin="20 0 15 0">
+        <StackPanel Margin="20 0 15 0" >
 
           <TextBlock Text="Startup Page" Margin="0 0 0 10"/>
           <ComboBox Items="{Binding Remote.ViewModelNames}" SelectedItem="{Binding DefaultsStore.Defaults.DefaultViewModelName}" Width="320"/>
 
-          <TextBlock Text="Tracks Per Pages" Margin="0 20 0 10" />
-          <NumericUpDown Value="{Binding SettingsStore.Settings.UXSettings.TracksPerPage}" Increment="1" HorizontalAlignment="Left" Width="150"/>
+          <StackPanel DataContext="{Binding SettingsStore.Settings.UXSettings}">
+            <TextBlock Text="Tracks Per Pages" Margin="0 20 0 10" />
+            <NumericUpDown Value="{Binding TracksPerPage}" Increment="1" HorizontalAlignment="Left" Width="150"/>
 
-          <TextBlock Text="Activities Per Pages" Margin="0 20 0 10" />
-          <NumericUpDown Value="{Binding SettingsStore.Settings.UXSettings.ActivitiesPerPage}" Increment="1" HorizontalAlignment="Left" Width="150"/>
+            <TextBlock Text="Activities Per Pages" Margin="0 20 0 10" />
+            <NumericUpDown Value="{Binding ActivitiesPerPage}" Increment="1" HorizontalAlignment="Left" Width="150"/>
+          </StackPanel>
           
           <TextBlock Text="Default Character" Margin="0 20 0 10" />
           <ComboBox Items="{Binding DefaultsStore.Defaults.Characters.Values}" SelectedIndex="{Binding DefaultsStore.Defaults.DefaultCharacter, Converter={StaticResource CharacterToIndexConverter}}" Width="320">

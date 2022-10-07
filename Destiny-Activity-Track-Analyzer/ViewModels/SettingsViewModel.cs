@@ -1,9 +1,6 @@
-using System.Linq;
-using DynamicData.Kernel;
 using ReactiveUI;
 using Tracker.Shared.Frontend;
 using Tracker.Shared.Stores;
-using Tracker.Shared.Stores.Component;
 
 namespace Tracker.ViewModels
 {
@@ -45,21 +42,22 @@ namespace Tracker.ViewModels
 
         public void Save()
         {
-            this.RaiseAndSetIfChanged(ref _settings, _settings);
-            this.RaiseAndSetIfChanged(ref _defaults, _defaults);
+            //this.RaiseAndSetIfChanged(ref _settings, _settings);
+            //this.RaiseAndSetIfChanged(ref _defaults, _defaults);
 
             SettingsStore.Save();
-            //DefaultsStore.Save();
+            DefaultsStore.Save();
         }
 
-        public void OnSettingsChange(object? sender, AppSettings settings)
+        // this may become useless
+        /*public void OnSettingsChange(object? sender, AppSettings settings)
         {
-            //Settings = settings;
+            Settings = settings;
         }
 
         public void OnDefaultsChange(object? sender, Defaults defaults)
         {
-            //Defaults = defaults;
-        }
+            Defaults = defaults;
+        }*/
     }
 }

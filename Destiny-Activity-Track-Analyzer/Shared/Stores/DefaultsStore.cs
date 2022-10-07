@@ -4,6 +4,7 @@ using System.IO;
 using System.Security.Authentication;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Linq;
 using API.Endpoints;
 using API.Entities.User;
 using API.Enums;
@@ -120,9 +121,23 @@ namespace Tracker.Shared.Stores
 
             Console.WriteLine($"Found {user.BungieGlobalDisplayName}");
 
-            Defaults.Characters = (await api.GetProfile(user.MembershipType, user.GetMembershipId(), DestinyComponentType.Characters)).Characters.Data;
+            await UpdateCharacters(user);
 
             DefaultsUpdated?.Invoke(this, Defaults);
+        }
+
+        /// <Summary>
+        ///   Since Avalonia break the moment the reference of <see cref="Defaults.Characters"/> is changed, <br/>
+        ///   we need to instead replace the existing values, which is effectively slower
+        /// </Summary>
+        public async Task UpdateCharacters(UserInfoCard user)
+        {
+            // Reference cannot be replaced or else Avalonia will throw
+            Defaults.Characters.Clear();
+            var temp = (await api.GetProfile(user.MembershipType, user.GetMembershipId(), DestinyComponentType.Characters)).Characters.Data;
+
+            foreach(var entry in temp)
+                Defaults.Characters.Add(entry.Key, entry.Value);
         }
 
         /// <Summary>
