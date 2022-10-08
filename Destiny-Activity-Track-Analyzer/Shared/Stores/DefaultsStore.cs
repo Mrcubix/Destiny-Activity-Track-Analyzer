@@ -4,7 +4,6 @@ using System.IO;
 using System.Security.Authentication;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Linq;
 using API.Endpoints;
 using API.Entities.User;
 using API.Enums;
@@ -127,7 +126,7 @@ namespace Tracker.Shared.Stores
         }
 
         /// <Summary>
-        ///   Since Avalonia break the moment the reference of <see cref="Defaults.Characters"/> is changed, <br/>
+        ///   Since Something break the moment the reference of <see cref="Defaults.Characters"/> is changed, <br/>
         ///   we need to instead replace the existing values, which is effectively slower
         /// </Summary>
         public async Task UpdateCharacters(UserInfoCard user)

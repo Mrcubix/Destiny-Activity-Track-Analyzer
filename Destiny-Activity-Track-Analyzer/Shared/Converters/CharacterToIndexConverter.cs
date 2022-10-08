@@ -17,9 +17,7 @@ namespace Tracker.Shared.Converters
             if (value is DestinyCharacterComponent character)
             {
                 var characters = Remote.SharedStores.DefaultsStore.Defaults.Characters;
-                characters.Values.IndexOf(character);
-                var temp = characters.Keys.IndexOf(character.GetCharacterId());
-                return temp;
+                return characters.Keys.IndexOf(character.GetCharacterId());
             }
 
             return -1;
