@@ -86,7 +86,7 @@ or
 ### Activity
 
 - Name
-- Time Elasped since started
+- Time Elapsed since started
 - Completion count
 
 ### Current
