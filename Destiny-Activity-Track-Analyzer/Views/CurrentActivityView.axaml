@@ -17,6 +17,8 @@
       <Button Command="" HorizontalAlignment="Center" VerticalAlignment="Center">Go to Setup</Button>
     </StackPanel>
 
-    <TextBlock Text="{Binding CurrentActivity.DisplayProperties.Name, FallbackValue='Not in Activity'}" IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}" Margin="0 10 0 0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Image Source="{Binding CurrentModeIcon}" Width="96" Height="96" />
+    <TextBlock Text="{Binding CurrentActivity.DisplayProperties.Name, FallbackValue='Not in Activity'}"  IsVisible="{Binding !InOrbit}" IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}" Margin="0 10 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+    <TextBlock Text="Currently in Orbit" IsVisible="{Binding IsInOrbit}" IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
   </StackPanel>
 </UserControl>

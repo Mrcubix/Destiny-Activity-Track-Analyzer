@@ -6,20 +6,20 @@ namespace Tracker.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private SettingsStore _settings = null!;
-        private DefaultsStore _defaults = null!;
+        private SettingsStore _settingsStore = null!;
+        private DefaultsStore _defaultsStore = null!;
 
 
         public SettingsStore SettingsStore
         {
-            get => _settings;
-            set => this.RaiseAndSetIfChanged(ref _settings, value);
+            get => _settingsStore;
+            set => this.RaiseAndSetIfChanged(ref _settingsStore, value);
         }
 
         public DefaultsStore DefaultsStore
         {
-            get => _defaults;
-            set => this.RaiseAndSetIfChanged(ref _defaults, value);
+            get => _defaultsStore;
+            set => this.RaiseAndSetIfChanged(ref _defaultsStore, value);
         }
 
 
@@ -48,16 +48,5 @@ namespace Tracker.ViewModels
             SettingsStore.Save();
             DefaultsStore.Save();
         }
-
-        // this may become useless
-        /*public void OnSettingsChange(object? sender, AppSettings settings)
-        {
-            Settings = settings;
-        }
-
-        public void OnDefaultsChange(object? sender, Defaults defaults)
-        {
-            Defaults = defaults;
-        }*/
     }
 }
