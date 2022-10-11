@@ -3,9 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Tracker.ViewModels"
-             xmlns:templates="using:Tracker.Controls.Templates"
+             xmlns:templates="using:Tracker.Controls.Templates.Settings"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Tracker.Views.SettingsView"
+             x:DataType="viewModels:SettingsViewModel"
+             x:CompileBindings="True"
              Foreground="White">
 
   <Design.DataContext>
@@ -19,7 +21,7 @@
       <TextBlock Text="UX Settings" FontSize="16" Margin="10" />
       <Panel>
         <!-- UX Settings Section -->
-        <templates:APISettingsControl />
+        <templates:APISettingsControl Settings="{Binding SettingsStore.Settings.APISettings}"/>
       </Panel>
 
       <!-- API Setting Header -->

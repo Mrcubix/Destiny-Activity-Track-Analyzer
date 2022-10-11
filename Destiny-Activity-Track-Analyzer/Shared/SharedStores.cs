@@ -13,7 +13,10 @@ namespace Tracker.Shared
         public DefinitionsStore DefinitionsStore { get; set; }
         public SettingsStore SettingsStore { get; set; }
         public DefaultsStore DefaultsStore { get; set; }
+        // TODO: Implement CharacterStore
         public IconStore IconStore { get; set; }
+        // TODO: Implement EmblemStore
+        // TODO: Implement EmblemBackGroundStore
 
 
         public SharedStores()

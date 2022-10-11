@@ -1,6 +1,6 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:Tracker.Controls.Templates"
+        xmlns:controls="using:Tracker.Controls.Templates.Settings"
         xmlns:converters="using:Tracker.Shared.Converters">
 
   <Design.PreviewWith>

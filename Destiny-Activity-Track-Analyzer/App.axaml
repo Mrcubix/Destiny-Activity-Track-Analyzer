@@ -7,8 +7,8 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <StyleInclude Source="/Controls/Templates/UXSettingsControl.axaml" />
-        <StyleInclude Source="/Controls/Templates/APISettingsControl.axaml" />
+        <StyleInclude Source="/Controls/Templates/Settings/UXSettingsControl.axaml" />
+        <StyleInclude Source="/Controls/Templates/Settings/APISettingsControl.axaml" />
     </Application.Styles>
 
     <Application.Styles>

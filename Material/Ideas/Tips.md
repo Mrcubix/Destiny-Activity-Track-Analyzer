@@ -27,7 +27,8 @@ TBD
 
 # Settings
 
-TBD
+- Don't refresh user if APISettings is not changed
+- Don't refresh characters if characters haven't changed in the API (or if the user hasn't changed)
 
 # Backend
 

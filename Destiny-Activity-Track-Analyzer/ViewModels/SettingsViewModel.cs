@@ -35,7 +35,7 @@ namespace Tracker.ViewModels
 
         public void Initialize()
         {
-            // Note: The issue is not that it assign the value, but that the reference becomes absolete
+            // Note: The issue is not that it assign the value, but that the reference becoming absolete
             //Remote.SharedStores.SettingsStore.SettingsUpdated += OnSettingsChange;
             //Remote.SharedStores.DefaultsStore.DefaultsUpdated += OnDefaultsChange;
         }

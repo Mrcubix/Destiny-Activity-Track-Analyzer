@@ -131,6 +131,9 @@ namespace Tracker.Shared.Stores
         /// </Summary>
         public async Task UpdateCharacters(UserInfoCard user)
         {
+            // TODO: Assets related to the characters need to be downloaded
+            // Emblem Background res: 395 x 80 px
+            
             // Reference cannot be replaced or else Avalonia will throw
             Defaults.Characters.Clear();
             var temp = (await api.GetProfile(user.MembershipType, user.GetMembershipId(), DestinyComponentType.Characters)).Characters.Data;
