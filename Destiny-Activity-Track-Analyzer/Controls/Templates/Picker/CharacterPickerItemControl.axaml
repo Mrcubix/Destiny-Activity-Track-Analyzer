@@ -1,20 +1,54 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:Tracker.Controls.Templates.Picker">
+        xmlns:controls="using:Tracker.Controls.Templates.Picker"
+        xmlns:component="using:API.Entities.Characters"
+        xmlns:converters="using:Tracker.Shared.Converters">
+        
   <Design.PreviewWith>
     <controls:CharacterPickerItemControl />
   </Design.PreviewWith>
 
   <Style Selector="controls|CharacterPickerItemControl">
+
+    <Style.Resources>
+      <converters:ClassHashConverter x:Key="ClassHashConverter" />
+      <converters:RaceHashConverter x:Key="RaceHashConverter" />
+      <converters:EmblemHashToEmblemBackground x:Key="EmblemHashToEmblemBackground" />
+    </Style.Resources>
+
     <!-- Set Defaults -->
     <Setter Property="Template">
       <ControlTemplate>
-        <StackPanel Orientation="Horizontal">
-          <Button Command="">
-            <Image Source="{Binding Character.Icon}" Width="32" Height="32" />
-            <TextBlock Text="{Binding Character.Name}" Margin="10 0 0 0" />
-          </Button>
-        </StackPanel>
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="45*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="30*" />
+          </Grid.RowDefinitions>
+
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*" MinWidth="64"/>
+            <ColumnDefinition Width="25*" MinWidth="115"/>
+            <ColumnDefinition Width="27.6*" MinWidth="109"/>
+            <ColumnDefinition Width="27.3*" MinWidth="108"/>
+          </Grid.ColumnDefinitions>
+        
+          <!-- TODO: Add Drop shadows to text -->
+          <!-- This can be done by creating the same text and putting it under the first one, with an offset and then blur it out -->
+
+          <!-- Image Background -->
+          <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="4" Width="395" Height="80" Source="{Binding EmblemHash, Converter={StaticResource EmblemHashToEmblemBackground}}" />
+          
+          <!-- Class & Race -->
+          <TextBlock Grid.Row="0" Grid.Column="1" Name="Class" Text="{Binding ClassHash, Converter={StaticResource ClassHashConverter}}" FontSize="24" Margin="10 4 0 0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+          <TextBlock Grid.Row="1" Grid.Column="1" Name="Race" Text="{Binding RaceHash, Converter={StaticResource RaceHashConverter}}" FontSize="16" Foreground="#FFFFFF" Opacity="0.357" Margin="10 -4 0 0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+          
+          <!-- Power Count -->
+          <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" Margin="0 0 6 0" HorizontalAlignment="Right">
+            <Image Source="/Assets/Icons/Other/power.png" Width="16" Height="16" Margin="0 2 0 0" VerticalAlignment="Center"/>
+            <TextBlock Name="Power" Text="{Binding Light}" FontSize="32" Foreground="#C6C747" Margin="0 4 0 0" VerticalAlignment="Top"  />
+          </StackPanel>
+        </Grid>
       </ControlTemplate>
     </Setter>
   </Style>

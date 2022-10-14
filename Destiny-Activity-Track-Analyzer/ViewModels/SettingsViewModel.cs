@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ReactiveUI;
 using Tracker.Shared.Frontend;
 using Tracker.Shared.Stores;
@@ -8,6 +9,7 @@ namespace Tracker.ViewModels
     {
         private SettingsStore _settingsStore = null!;
         private DefaultsStore _defaultsStore = null!;
+        private UserStore _userStore = null!;
 
 
         public SettingsStore SettingsStore
@@ -22,31 +24,29 @@ namespace Tracker.ViewModels
             set => this.RaiseAndSetIfChanged(ref _defaultsStore, value);
         }
 
+        public UserStore UserStore
+        {
+            get => _userStore;
+            set => this.RaiseAndSetIfChanged(ref _userStore, value);
+        }
+
 
         public SettingsViewModel(ViewRemote remote)
         {
             Remote = remote;
             SettingsStore = Remote.SharedStores.SettingsStore;
             DefaultsStore = Remote.SharedStores.DefaultsStore;
-
-            Initialize();
+            UserStore = Remote.SharedStores.UserStore;
         }
 
-
-        public void Initialize()
-        {
-            // Note: The issue is not that it assign the value, but that the reference becoming absolete
-            //Remote.SharedStores.SettingsStore.SettingsUpdated += OnSettingsChange;
-            //Remote.SharedStores.DefaultsStore.DefaultsUpdated += OnDefaultsChange;
-        }
 
         public void Save()
         {
-            //this.RaiseAndSetIfChanged(ref _settings, _settings);
-            //this.RaiseAndSetIfChanged(ref _defaults, _defaults);
 
             SettingsStore.Save();
             DefaultsStore.Save();
+            UserStore.Save();
+            _ = Task.Run(Remote.SharedStores.EmblemStore.Update);
         }
     }
 }

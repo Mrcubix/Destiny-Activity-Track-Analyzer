@@ -125,7 +125,7 @@ namespace Tracker.ViewModels
                 }
                 else
                 {
-                    if (Remote.SharedStores.DefaultsStore.Defaults.Characters.Count != 0)
+                    if (Remote.SharedStores.UserStore.User.Characters.Count != 0)
                         CurrentCharacter = Remote.SharedStores.DefaultsStore.Defaults.DefaultCharacter;
                 }
             }

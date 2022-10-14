@@ -11,6 +11,9 @@ namespace Tracker.Shared.Static
         public static string SettingsPath { get; } = Path.Combine(BaseDir, "Settings.json");
         public static string DefinitionsDir { get; } = Path.Combine(BaseDir, "json", "Definitions");
         public static string DefaultsPath { get; } = Path.Combine(BaseDir, "json", "Defaults.json");
+        public static string UserPath { get; } = Path.Combine(BaseDir, "json", "User.json");
+        public static string EmblemDir { get; } = Path.Combine(BaseDir, "Emblems");
+        public static string EmblemPath { get; } = Path.Combine(BaseDir, "json", "Emblem.json");
         public static string TempDir { get; } = Path.Combine(BaseDir, "temp");
 
         public static OSPlatform GetPlatform()

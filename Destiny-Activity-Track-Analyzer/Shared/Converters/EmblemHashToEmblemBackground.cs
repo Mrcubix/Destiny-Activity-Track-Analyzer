@@ -5,19 +5,22 @@ using API.Entities.Characters;
 using Avalonia.Data.Converters;
 using DynamicData;
 using Tracker.Shared.Frontend;
+using Tracker.Shared.Stores.Component;
 
 namespace Tracker.Shared.Converters
 {
-    public class CharacterToIndexConverter : IValueConverter
+    public class EmblemHashToEmblemBackground : IValueConverter
     {
         public static ViewRemote Remote { get; set; } = null!;
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is DestinyCharacterComponent character)
+            if (value is uint hash)
             {
-                var characters = Remote.SharedStores.UserStore.User.Characters;
-                return characters.Keys.IndexOf(character.GetCharacterId());
+                var emblems = Remote.SharedStores.EmblemStore.Emblems;
+                
+                if (emblems.ContainsKey(hash))
+                    return emblems[hash].LoadEmblemBackground();
             }
 
             return -1;
@@ -25,14 +28,6 @@ namespace Tracker.Shared.Converters
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is int index)
-            {
-                var characters = Remote.SharedStores.UserStore.User.Characters;
-
-                if (characters.Count > index && index >= 0)
-                    return characters.Values.ToArray()[index];
-            }
-
             return null;
         }
     }

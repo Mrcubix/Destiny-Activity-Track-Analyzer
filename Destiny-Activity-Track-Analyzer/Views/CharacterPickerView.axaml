@@ -4,10 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Tracker.ViewModels"
              xmlns:templates="using:Tracker.Controls.Templates.Picker"
+             xmlns:collection="using:System.Collections.Generic"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Tracker.Views.CharacterPickerView"
-             x:DataType="viewModels:CharacterPickerViewModel"
-             x:CompileBindings="True"
              Foreground="White">
 
   <Design.DataContext>
@@ -16,21 +15,21 @@
 
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
+      <RowDefinition Height="100*" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" />
-      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="100*" />
     </Grid.ColumnDefinitions>
 
-    <ItemsControl Grid.Row="0" Grid.Column="0" Items="{Binding Characters}">
-      <ItemsControl.ItemTemplate>
+    <ListBox Grid.Row="0" Grid.Column="0" Items="{Binding UserStore.User.Characters.Values}" Width="395" Height="279">
+      <ListBox.ItemTemplate>
         <DataTemplate>
-          <!-- <StackPanel Orientation="Horizontal" /> -->
-          <templates:CharacterPickerItemTemplate Character="{Binding}" />
+          <StackPanel Orientation="Horizontal" Width="395" Height="80" Margin="0 -13 0 0">
+            <!-- Not using property Character cause i can't it to work -->
+            <templates:CharacterPickerItemControl DataContext="{Binding}" />
+          </StackPanel>
         </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
+      </ListBox.ItemTemplate>
+    </ListBox>
   </Grid>
 </UserControl>

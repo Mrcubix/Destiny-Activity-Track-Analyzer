@@ -66,22 +66,26 @@ namespace Tracker
         {
             Remote.SharedStores.Load();
 
-            await Remote.SharedStores.DefaultsStore.Update();
+            await Remote.SharedStores.UserStore.Update();
+
+            // this should be done when the remote is init
+            if (Remote.SharedStores.UserStore.User.UserInfo != null && Remote.SharedStores.DefaultsStore.Defaults.DefaultCharacter != null)
+                Remote.ShowView(Remote.SharedStores.DefaultsStore.Defaults.DefaultViewModelName);
         }
 
         public void LoadViewModels()
         {
             Remote.AddVM(new CurrentActivityViewModel(API, Remote));
             Remote.AddVM(new SettingsViewModel(Remote));
-
-            // Check if there are no characters in settings
-            Remote.ShowView(Remote.SharedStores.DefaultsStore.Defaults.DefaultViewModelName);
+            Remote.AddVM(new CharacterPickerViewModel(Remote));
         }
 
         public void InitializeConverters()
         {
             ClassHashConverter.Remote = Remote;
+            RaceHashConverter.Remote = Remote;
             CharacterToIndexConverter.Remote = Remote;
+            EmblemHashToEmblemBackground.Remote = Remote;
         }
     }
 }

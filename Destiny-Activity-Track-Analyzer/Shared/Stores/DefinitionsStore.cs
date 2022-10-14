@@ -26,6 +26,7 @@ namespace Tracker.Shared.Stores
         private Definition<DestinyActivityModeDefinition> _activityModeDefinitions = new("DestinyActivityModeDefinition");
         private Definition<DestinyActivityTypeDefinition> _activityTypeDefinitions = new("DestinyActivityTypeDefinition");
         private Definition<DestinyClassDefinition> _classDefinitions = new("DestinyClassDefinition");
+        private Definition<DestinyRaceDefinition> _raceDefinitions = new("DestinyRaceDefinition");
 
 
         /// <Summary>
@@ -82,6 +83,15 @@ namespace Tracker.Shared.Stores
             set => this.RaiseAndSetIfChanged(ref _classDefinitions, value);
         }
 
+        /// <Summary>
+        ///   A Definition containing Races in the game
+        /// </Summary>
+        public Definition<DestinyRaceDefinition> RaceDefinitions
+        {
+            get => _raceDefinitions;
+            set => this.RaiseAndSetIfChanged(ref _raceDefinitions, value);
+        }
+
 
         public DefinitionsStore(SettingsStore settings)
         {
@@ -99,7 +109,8 @@ namespace Tracker.Shared.Stores
                 ["DestinyActivityDefinition"] = ActivityDefinitions,
                 ["DestinyActivityModeDefinition"] = ActivityModeDefinitions,
                 ["DestinyActivityTypeDefinition"] = ActivityTypeDefinitions,
-                ["DestinyClassDefinition"] = ClassDefinitions
+                ["DestinyClassDefinition"] = ClassDefinitions,
+                ["DestinyRaceDefinition"] = RaceDefinitions
             };
 
             foreach(IStore definition in Definitions.Values)

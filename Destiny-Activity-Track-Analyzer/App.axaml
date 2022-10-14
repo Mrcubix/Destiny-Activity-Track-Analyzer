@@ -9,6 +9,7 @@
     <Application.Styles>
         <StyleInclude Source="/Controls/Templates/Settings/UXSettingsControl.axaml" />
         <StyleInclude Source="/Controls/Templates/Settings/APISettingsControl.axaml" />
+        <StyleInclude Source="/Controls/Templates/Picker/CharacterPickerItemControl.axaml" />
     </Application.Styles>
 
     <Application.Styles>

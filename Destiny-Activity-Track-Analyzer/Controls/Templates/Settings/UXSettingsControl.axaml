@@ -31,7 +31,7 @@
           </StackPanel>
           
           <TextBlock Text="Default Character" Margin="0 20 0 10" />
-          <ComboBox Items="{Binding DefaultsStore.Defaults.Characters.Values}" SelectedIndex="{Binding DefaultsStore.Defaults.DefaultCharacter, Converter={StaticResource CharacterToIndexConverter}}" Width="320">
+          <ComboBox Items="{Binding UserStore.User.Characters.Values}" SelectedIndex="{Binding DefaultsStore.Defaults.DefaultCharacter, Converter={StaticResource CharacterToIndexConverter}}" Width="320">
             <ComboBox.ItemTemplate>
               <DataTemplate>
                 <ComboBoxItem>
