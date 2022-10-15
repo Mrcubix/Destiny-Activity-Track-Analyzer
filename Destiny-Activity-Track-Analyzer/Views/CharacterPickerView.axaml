@@ -21,15 +21,27 @@
       <ColumnDefinition Width="100*" />
     </Grid.ColumnDefinitions>
 
-    <ListBox Grid.Row="0" Grid.Column="0" Items="{Binding UserStore.User.Characters.Values}" Width="395" Height="279">
+    <!-- TODO: Find a way to get rid of the padding / margin after an element and replace it with a non-clickable element -->
+    <!-- TODO: Bind SelectedItem to a property in User that won't be serialized, when changed, close the view -->
+    <ListBox Grid.Row="0" Grid.Column="0" Items="{Binding UserStore.User.Characters.Values}" Width="395" Height="261">
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <StackPanel Orientation="Horizontal" Width="395" Height="80" Margin="0 -13 0 0">
+          <ListBoxItem IsTabStop="false" Padding="0" Width="395" Height="80" Margin="0 -10 0 0">
             <!-- Not using property Character cause i can't it to work -->
             <templates:CharacterPickerItemControl DataContext="{Binding}" />
-          </StackPanel>
+          </ListBoxItem>
         </DataTemplate>
       </ListBox.ItemTemplate>
+      <ListBox.Styles>
+        <!-- equivalent of :hover in html -->
+        <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+          <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <!-- equivalent of :active -->
+        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+          <Setter Property="Background" Value="Transparent" />
+        </Style>
+      </ListBox.Styles>
     </ListBox>
   </Grid>
 </UserControl>

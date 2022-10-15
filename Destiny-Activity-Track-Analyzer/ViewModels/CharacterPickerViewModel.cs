@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using API.Entities.Characters;
 using ReactiveUI;
 using Tracker.Shared.Frontend;
 using Tracker.Shared.Stores;
-using Tracker.Shared.Stores.Component;
 
 namespace Tracker.ViewModels
 {

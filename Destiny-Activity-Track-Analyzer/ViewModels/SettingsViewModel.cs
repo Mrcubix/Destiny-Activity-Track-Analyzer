@@ -42,7 +42,6 @@ namespace Tracker.ViewModels
 
         public void Save()
         {
-
             SettingsStore.Save();
             DefaultsStore.Save();
             UserStore.Save();

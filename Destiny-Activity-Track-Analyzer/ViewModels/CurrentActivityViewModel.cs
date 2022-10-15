@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using API.Endpoints;
@@ -72,6 +73,7 @@ namespace Tracker.ViewModels
         public void Initialize()
         {
             // Note: The issue is not that it assign the value, but that the reference becomes absolete
+            Remote.SharedStores.IconStore.IconsLoaded += OnIconsLoadComplete;
             Remote.SharedStores.SettingsStore.SettingsUpdated += OnSettingsChange;
         }
 
@@ -129,6 +131,11 @@ namespace Tracker.ViewModels
                         CurrentCharacter = Remote.SharedStores.DefaultsStore.Defaults.DefaultCharacter;
                 }
             }
+        }
+
+        public void OnIconsLoadComplete(object? send, Dictionary<int, Bitmap?> icons)
+        {
+            CurrentModeIcon = icons[0];
         }
 
         public void OnSettingsChange(object? send, AppSettings settings)

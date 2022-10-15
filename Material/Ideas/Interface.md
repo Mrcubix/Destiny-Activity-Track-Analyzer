@@ -68,8 +68,8 @@ or
     - [ ] Specify Username
     - [ ] Specify Tag
 
-- [ ] Valid? (SearchPlayerByBungieName w/ count == 1)
-    - [ ] Save
+- [x] Valid? (SearchPlayerByBungieName w/ count == 1)
+    - [x] Save
     - [ ] Prompt User if they want DATA to generate the Activity list
     => Track current Activity
 - [ ] May Be Valid?

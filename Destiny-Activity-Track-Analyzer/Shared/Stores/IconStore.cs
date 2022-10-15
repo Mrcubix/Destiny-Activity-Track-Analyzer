@@ -15,6 +15,9 @@ namespace Tracker.Shared.Stores
         private IAssetLoader? AssetsLoader { get; set;}
 
 
+        public event EventHandler<Dictionary<int, Bitmap?>> IconsLoaded = null!;
+
+
         // Dictionary of ActivityModeType to Icon, stored in Avalonia's AssetLoader
         public Dictionary<int, string> IconPaths { get; set; } = new()
         {
@@ -125,6 +128,8 @@ namespace Tracker.Shared.Stores
             Console.WriteLine("Loaded " + loadedIcons.Count + " activity icons");
 
             loadedIcons.Clear();
+
+            IconsLoaded?.Invoke(this, ActivityIcons);
 
             Console.WriteLine("TODO: I might want to load them from a file in the future");
         }

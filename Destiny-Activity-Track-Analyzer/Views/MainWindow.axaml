@@ -21,8 +21,9 @@
             <Button Command="{Binding Remote.ShowView}" CommandParameter="MainViewModel" VerticalAlignment="Center">Home</Button>
             <Button Command="{Binding Remote.ShowView}" CommandParameter="CurrentActivityViewModel" VerticalAlignment="Center">Current</Button>
             <Button Command="{Binding Remote.ShowView}" CommandParameter="SettingsViewModel" VerticalAlignment="Center">Settings</Button>
+            <Button Command="{Binding Remote.ShowView}" CommandParameter="CharacterPickerViewModel" VerticalAlignment="Center">Character Picker</Button>
             <Button Command="{Binding Remote.SharedStores.Update}" VerticalAlignment="Center" IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}">Refresh</Button>
-            <TextBlock Text="DATA is Currently Updating manifests" IsVisible="{Binding Remote.SharedStores.DefinitionsStore.IsUpdating}"/>
+            <TextBlock Text="DATA is Currently Updating manifests" IsVisible="{Binding Remote.SharedStores.DefinitionsStore.IsUpdating}" VerticalAlignment="Center"/>
         </StackPanel>
         <Panel Grid.Row="1">
             <ContentControl Content="{Binding Remote.CurrentViewModel}" />

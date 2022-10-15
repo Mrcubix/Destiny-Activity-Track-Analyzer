@@ -70,6 +70,10 @@ namespace Tracker.Shared.Stores
                     Console.WriteLine($"Settings file may be corrupted or invalid, a backup was created in {SharedPlatformSpecificVariables.BaseDir}");
                 }
             }
+            else
+            {
+                File.WriteAllText(SharedPlatformSpecificVariables.SettingsPath, JsonSerializer.Serialize(Settings, SharedSerializerOptions.SerializerWriteOptions));
+            }
 
             SettingsLoaded?.Invoke(this, Settings);
             SettingsUpdated?.Invoke(this, Settings);
@@ -83,10 +87,9 @@ namespace Tracker.Shared.Stores
             if (File.Exists(SharedPlatformSpecificVariables.SettingsPath))
             {
                 File.WriteAllText(SharedPlatformSpecificVariables.SettingsPath, JsonSerializer.Serialize(Settings, SharedSerializerOptions.SerializerWriteOptions));
-                _ = Task.Run(Update);
             }
 
-            Update();
+            SettingsUpdated?.Invoke(this, Settings);
         }
 
         /// <Summary>

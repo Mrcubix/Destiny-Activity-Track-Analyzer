@@ -102,6 +102,9 @@ namespace Tracker.Shared.Stores
 
             api = new(apiSettings);
 
+            if (!settings.IsKeySet)
+                return;
+
             // STEP 1: Check if the user is the same as current
 
             await UpdateUserInfo(apiSettings);
