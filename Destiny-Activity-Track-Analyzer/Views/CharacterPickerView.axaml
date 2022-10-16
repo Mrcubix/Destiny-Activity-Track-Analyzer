@@ -5,6 +5,7 @@
              xmlns:viewModels="clr-namespace:Tracker.ViewModels"
              xmlns:templates="using:Tracker.Controls.Templates.Picker"
              xmlns:collection="using:System.Collections.Generic"
+             xmlns:converters="using:Tracker.Shared.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Tracker.Views.CharacterPickerView"
              Foreground="White">
@@ -12,6 +13,15 @@
   <Design.DataContext>
     <viewModels:CharacterPickerViewModel />
   </Design.DataContext>
+
+  <UserControl.Styles>
+    <Style Selector="ListBoxItem">
+      <Style.Resources>
+        <converters:CharacterToIndexConverter x:Key="CharacterToIndexConverter" />
+      </Style.Resources>
+    </Style>
+  </UserControl.Styles>
+  
 
   <Grid>
     <Grid.RowDefinitions>
@@ -23,10 +33,14 @@
 
     <!-- TODO: Find a way to get rid of the padding / margin after an element and replace it with a non-clickable element -->
     <!-- TODO: Bind SelectedItem to a property in User that won't be serialized, when changed, close the view -->
-    <ListBox Grid.Row="0" Grid.Column="0" Items="{Binding UserStore.User.Characters.Values}" Width="395" Height="261">
+    <!-- TODO: Replace SelectedIndex value with current later on -->
+    <ListBox Name="Choice" Grid.Row="0" Grid.Column="0" Items="{Binding UserStore.User.Characters.Values}" SelectionMode="Single" Width="395" Height="261">
+      <ListBox.SelectedIndex>
+        <Binding Path="DefaultsStore.Defaults.DefaultCharacter" Converter="{StaticResource CharacterToIndexConverter}" />
+      </ListBox.SelectedIndex>
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <ListBoxItem IsTabStop="false" Padding="0" Width="395" Height="80" Margin="0 -10 0 0">
+          <ListBoxItem Padding="0" Width="395" Height="80" Margin="0 -10 0 0">
             <!-- Not using property Character cause i can't it to work -->
             <templates:CharacterPickerItemControl DataContext="{Binding}" />
           </ListBoxItem>

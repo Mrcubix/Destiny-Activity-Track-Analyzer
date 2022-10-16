@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using API.Entities.Characters;
 using API.Entities.User;
 using ReactiveUI;
@@ -9,6 +11,7 @@ namespace Tracker.Shared.Stores.Component
     {
         private UserInfoCard _userInfo = null!;
         private Dictionary<long, DestinyCharacterComponent> _characters = new();
+        private DestinyCharacterComponent _currentCharacter = null!;
 
 
         /// <Summary>
@@ -27,6 +30,16 @@ namespace Tracker.Shared.Stores.Component
         {
             get => _characters;
             set => this.RaiseAndSetIfChanged(ref _characters, value);
+        }
+
+        /// <Summary>
+        ///   Currently Selected Character
+        /// </Summary>
+        [JsonIgnore]
+        public DestinyCharacterComponent CurrentCharacter
+        {
+            get => _currentCharacter;
+            set => this.RaiseAndSetIfChanged(ref _currentCharacter, value);
         }
     }
 }

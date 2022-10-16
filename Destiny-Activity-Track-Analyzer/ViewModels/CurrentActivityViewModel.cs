@@ -75,6 +75,7 @@ namespace Tracker.ViewModels
             // Note: The issue is not that it assign the value, but that the reference becomes absolete
             Remote.SharedStores.IconStore.IconsLoaded += OnIconsLoadComplete;
             Remote.SharedStores.SettingsStore.SettingsUpdated += OnSettingsChange;
+            Remote.SharedStores.UserStore.CurrentCharacterChanged += OnCharacterChange;
         }
 
         public async Task StartTrackingCurrentActivity()
@@ -141,6 +142,11 @@ namespace Tracker.ViewModels
         public void OnSettingsChange(object? send, AppSettings settings)
         {
             this.API = new(settings.APISettings);
+        }
+
+        public void OnCharacterChange(object? sender, DestinyCharacterComponent character)
+        {
+            this.CurrentCharacter = character;
         }
     }
 }

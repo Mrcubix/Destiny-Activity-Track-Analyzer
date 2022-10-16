@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using API;
 using API.Endpoints;
+using API.Entities.Characters;
 using API.Entities.User;
 using API.Enums;
 using ReactiveUI;
@@ -26,6 +27,7 @@ namespace Tracker.Shared.Stores
 
         public event EventHandler<User> UserLoaded = null!;
         public event EventHandler<User> UserUpdated = null!;
+        public event EventHandler<DestinyCharacterComponent> CurrentCharacterChanged = null!;
 
         public User User
         {
@@ -43,6 +45,16 @@ namespace Tracker.Shared.Stores
         {
             this.settings = settings;
             api = new(settings.Settings.APISettings);
+        }
+
+        /// <summary>
+        /// Set the <see cref="User.CurrentCharacter"/> to the specified value and invoke the <see cref="CurrentCharacterChanged"/> event. <br/>
+        /// The real purpose of this method is to be able to detect character changes even when the reference of <see cref="User"/> is changed.
+        /// </summary>
+        public void SetCharacter(DestinyCharacterComponent character)
+        {
+            User.CurrentCharacter = character;
+            CurrentCharacterChanged?.Invoke(this, character);
         }
 
         public void Initialize()
@@ -205,6 +217,11 @@ namespace Tracker.Shared.Stores
         {
             IsUpdating = false;
             Console.WriteLine($"Successfully updated User");
+        }
+
+        public void OnCharacterChange(object? sender, DestinyCharacterComponent character)
+        {
+            Console.WriteLine("Character changed");
         }
     }
 }

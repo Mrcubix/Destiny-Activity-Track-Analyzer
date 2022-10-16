@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using API.Entities.Characters;
 using Avalonia;
 using Avalonia.Controls.Primitives;
+using Tracker.ViewModels;
 
 namespace Tracker.Controls.Templates.Picker
 {
