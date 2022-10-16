@@ -53,8 +53,8 @@ or
 
 #### Continue with current player
 
-- [ ] Means that a player player has been specified
-    - %localappdata%/DATA/current.json
+- [x] Means that a default player has been specified
+    - %localappdata%/DATA/Defaults.json
         - [ ] Valid?
             => Track current Activity
         - [ ] Invalid?
@@ -109,7 +109,7 @@ or
 
 #### Iteration
 
-- [ ] if activity Mode is not in the excluded list
+- [ ] If activity Mode is not in the excluded list
 
 ##### Activity not in Dictionary (Hash)
 
@@ -174,4 +174,20 @@ From left to right:
 
 - [ ] Activities per pages (see [List Activity](#list-activity))
 - [ ] Weekly Completion Tracks per pages (see [Allow Weekly Completion](#allow-weekly-completion))
+- [ ] Number of Notification to be stored before deletion (see [Notification](#notification-system))
 
+## Notification System
+
+- When a notification is sent, a message containing the content of the notification is still printed in console
+- May be system wide
+
+### Tray
+
+- [ ] Button at the top right of the interface to show recent notifications
+- [ ] Display up to 10 notifications (see [Store](#store))
+- [ ] Can be dismissed by clicking on the X
+- [ ] Clicking on them may result in an action
+
+### Store
+
+- [ ] Store up to 10 notifications (by default) (can be set in settings)
