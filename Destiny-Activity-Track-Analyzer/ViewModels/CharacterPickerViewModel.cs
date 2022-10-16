@@ -31,6 +31,7 @@ namespace Tracker.ViewModels
         public void OnCharacterSelect(long id)
         {
             UserStore.SetCharacter(UserStore.User.Characters[id]);
+            Remote.ShowView("CurrentActivityViewModel");
         }
     }
 }

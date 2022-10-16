@@ -24,7 +24,7 @@ namespace Tracker.Shared
         {
             SettingsStore = new();
             DefaultsStore = new();
-            UserStore = new(SettingsStore);
+            UserStore = new(SettingsStore, DefaultsStore);
             DefinitionsStore = new(SettingsStore);
             EmblemStore = new(SettingsStore, UserStore);
             IconStore = new();
@@ -34,7 +34,7 @@ namespace Tracker.Shared
         {
             SettingsStore = new();
             DefaultsStore = new(vm);
-            UserStore = new(SettingsStore);
+            UserStore = new(SettingsStore, DefaultsStore);
             DefinitionsStore = new(SettingsStore);
             EmblemStore = new(SettingsStore, UserStore);
             IconStore = new();

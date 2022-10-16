@@ -21,6 +21,7 @@ namespace Tracker.Shared.Stores
     {
         private Destiny2 api = null!;
         private SettingsStore settings = null!;
+        private DefaultsStore defaults = null!;
 
         private User _user = new();
         private bool _isUpdating = false;
@@ -41,9 +42,10 @@ namespace Tracker.Shared.Stores
             set => this.RaiseAndSetIfChanged(ref _isUpdating, value);
         }
 
-        public UserStore(SettingsStore settings)
+        public UserStore(SettingsStore settings, DefaultsStore defaults)
         {
             this.settings = settings;
+            this.defaults = defaults;
             api = new(settings.Settings.APISettings);
         }
 
@@ -88,6 +90,8 @@ namespace Tracker.Shared.Stores
 
             if (shouldWrite)
                 File.WriteAllText(SharedPlatformSpecificVariables.UserPath, JsonSerializer.Serialize(User, SharedSerializerOptions.SerializerWriteOptions));
+
+            SetCharacter(defaults.Defaults.DefaultCharacter);
 
             UserLoaded?.Invoke(this, User);
             UserUpdated?.Invoke(this, User);

@@ -36,7 +36,7 @@
     <!-- TODO: Replace SelectedIndex value with current later on -->
     <ListBox Name="Choice" Grid.Row="0" Grid.Column="0" Items="{Binding UserStore.User.Characters.Values}" SelectionMode="Single" Width="395" Height="261">
       <ListBox.SelectedIndex>
-        <Binding Path="DefaultsStore.Defaults.DefaultCharacter" Converter="{StaticResource CharacterToIndexConverter}" />
+        <Binding Path="UserStore.User.CurrentCharacter" Converter="{StaticResource CharacterToIndexConverter}" />
       </ListBox.SelectedIndex>
       <ListBox.ItemTemplate>
         <DataTemplate>

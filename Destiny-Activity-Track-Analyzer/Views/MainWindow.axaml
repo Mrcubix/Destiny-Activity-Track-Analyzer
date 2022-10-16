@@ -11,20 +11,35 @@
         Title="Tracker" 
         Background="#171C2C">
 
-    <Grid ShowGridLines="true">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5.5*" MinHeight="32" MaxHeight="32" />
             <RowDefinition Height="94.5*" />
         </Grid.RowDefinitions>
-        <!-- Back Button --> <!-- NavBar -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button Command="{Binding Remote.ShowView}" CommandParameter="MainViewModel" VerticalAlignment="Center">Home</Button>
-            <Button Command="{Binding Remote.ShowView}" CommandParameter="CurrentActivityViewModel" VerticalAlignment="Center">Current</Button>
-            <Button Command="{Binding Remote.ShowView}" CommandParameter="SettingsViewModel" VerticalAlignment="Center">Settings</Button>
-            <Button Command="{Binding Remote.ShowView}" CommandParameter="CharacterPickerViewModel" VerticalAlignment="Center">Character Picker</Button>
-            <Button Command="{Binding Remote.SharedStores.Update}" VerticalAlignment="Center" IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}">Refresh</Button>
-            <TextBlock Text="DATA is Currently Updating manifests" IsVisible="{Binding Remote.SharedStores.DefinitionsStore.IsUpdating}" VerticalAlignment="Center"/>
-        </StackPanel>
+
+        <Grid ShowGridLines="true">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5.5*" MinHeight="32" MaxHeight="32" />
+                <RowDefinition Height="94.5*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60*" />
+                <ColumnDefinition Width="40*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Name="NavBar" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
+                <Button Command="{Binding Remote.ShowView}" CommandParameter="MainViewModel" >Home</Button>
+                <Button Command="{Binding Remote.ShowView}" CommandParameter="CurrentActivityViewModel" >Current</Button>
+                <Button Command="{Binding Remote.ShowView}" CommandParameter="SettingsViewModel" >Settings</Button>
+                <Button Command="{Binding Remote.ShowView}" CommandParameter="CharacterPickerViewModel" >Character Picker</Button>
+                <Button Command="{Binding Remote.SharedStores.Update}"  IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}">Refresh</Button>
+                <TextBlock Text="DATA is Currently Updating manifests" IsVisible="{Binding Remote.SharedStores.DefinitionsStore.IsUpdating}" VerticalAlignment="Center"/>
+            </StackPanel>
+            
+            <StackPanel Name="Profile" Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="0 0 16 0" HorizontalAlignment="Right">
+                <TextBlock Text="{Binding Remote.SharedStores.UserStore.User.UserInfo.BungieGlobalDisplayName}" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
         <Panel Grid.Row="1">
             <ContentControl Content="{Binding Remote.CurrentViewModel}" />
         </Panel>
