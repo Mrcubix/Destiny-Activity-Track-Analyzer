@@ -14,8 +14,6 @@
 
 #### When
 
-- [ ] User infos are null
-or
 - [ ] API Key is null
 
 #### Explain
@@ -37,7 +35,7 @@ or
 - [ ] Single Field "API Key"
 - [ ] Button "Next"
     - [ ] Valid?
-        => Start with new player Setup
+        => Start with new user Setup
     - [ ] Invalid?
         => Show Error [OK]
 
@@ -49,7 +47,7 @@ or
 
 #### No current player
 
-=> Start with new player Setup
+=> Start with new user Setup
 
 #### Continue with current player
 
@@ -58,9 +56,9 @@ or
         - [ ] Valid?
             => Track current Activity
         - [ ] Invalid?
-            => Start with new player Setup
+            => Start with new user Setup
 
-#### Start with new player Setup
+#### Start with new user Setup
 
 ##### New Player View
 
@@ -72,7 +70,7 @@ or
     - [x] Save
     - [ ] Prompt User if they want DATA to generate the Activity list
     => Track current Activity
-- [ ] May Be Valid?
+- [ ] May Be Valid? (May not be possible, the endpoint only return duped UserInfo when using different platforms)
     - [ ] Show list of players found
         - [ ] Format `Player#Tag - Platform`
         => Valid?

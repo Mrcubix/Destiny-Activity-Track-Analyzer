@@ -17,6 +17,6 @@
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\.modules\Destiny2.NET\src\destiny2.NET.csproj" />
+    <ProjectReference Include="..\..\.modules\Destiny2.NET\src\destiny2.NET.csproj" />
   </ItemGroup>
 </Project>
