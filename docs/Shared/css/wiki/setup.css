@@ -1,0 +1,36 @@
+a {
+    text-decoration: none;
+    color: #426d93
+}
+
+section[class*="content"] {
+    margin: 1rem;
+}
+
+section[class*="content"] > section {
+    margin-top: 2rem;
+}
+
+section[class*="content"] > details > ul > li {
+    margin-bottom: 0.5rem
+}
+
+section[class*="content"] > details > ul > li > a:hover {
+    text-decoration: underline;
+}
+
+section[class*="content"] > details > ul > li > ol > li a:hover {
+    text-decoration: underline;
+}
+
+section[class*="content"] > section > section > ul > li > a:hover {
+    text-decoration: underline;
+}
+
+ul[class*="decimal"], ol[class*="decimal"] {
+    list-style-type: decimal;
+}
+
+ul[class*="dot"], ol[class*="dot"]{
+    list-style-type: circle;
+}

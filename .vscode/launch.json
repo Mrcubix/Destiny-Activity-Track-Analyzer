@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Destiny-Activity-Track-Analyzer.Desktop/bin/Debug/net6.0/Destiny-Activity-Track-Analyzer.Desktop.dll",
+            "program": "${workspaceFolder}/src/Destiny-Activity-Track-Analyzer.Desktop/bin/Debug/net6.0/Destiny-Activity-Track-Analyzer.Desktop.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Destiny-Activity-Track-Analyzer.Desktop",
+            "cwd": "${workspaceFolder}/src/Destiny-Activity-Track-Analyzer.Desktop",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
