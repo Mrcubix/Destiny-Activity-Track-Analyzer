@@ -55,10 +55,10 @@ class AnimatedAlign extends HTMLElement {
             if (margin != "24.568px" && margin != "19.92px" && margin != "21.6px" && margin != "21.280px")
             {
                 console.log(margin);
-                alert("Margin is not consistent, complain to browser devs");
+                console.log("Margin is not consistent, complain to browser devs");
             }
             
-        }, 5)
+        }, 10)
     }
 
     onChildsAppend(childs) {
