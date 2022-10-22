@@ -21,7 +21,7 @@ hr {
 }
 
 /* media query for screen < 768px */
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 768px) {
 
     nav > ul {
         flex-direction: column;

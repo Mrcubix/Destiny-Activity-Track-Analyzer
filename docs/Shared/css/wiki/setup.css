@@ -34,3 +34,48 @@ ul[class*="decimal"], ol[class*="decimal"] {
 ul[class*="dot"], ol[class*="dot"]{
     list-style-type: circle;
 }
+
+li {
+    font-size: 1.25rem;
+}
+
+p {
+    font-size: 1.25rem;
+}
+
+img {
+    max-width: 60%;
+}
+
+
+
+@media screen and (max-width: 768px) {
+    li {
+        font-size: 1.2rem;
+    }
+
+    p {
+        margin: 0.5rem 0.5rem 0.65rem 0.5rem;;
+        font-size: 1.2rem;
+    }
+
+    img {
+        object-fit: scale-down; 
+        max-width: 80%
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    li {
+        font-size: 1.2rem;
+    }
+
+    p {
+        margin: 0.5rem 0.5rem 0.65rem 0.5rem;;
+        font-size: 1.2rem;
+    }
+
+    img {
+        max-width: 70%
+    }
+}
