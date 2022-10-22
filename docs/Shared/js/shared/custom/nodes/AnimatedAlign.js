@@ -42,11 +42,23 @@ class AnimatedAlign extends HTMLElement {
     }
 
     setMarginOfSpanFromElem(elem) {
-        this.before.style.marginBlockEnd = window.getComputedStyle(elem).marginBlockEnd;
-        this.before.style.marginBlockStart = window.getComputedStyle(elem).marginBlockStart;
 
-        this.after.style.marginBlockEnd = window.getComputedStyle(elem).marginBlockEnd;
-        this.after.style.marginBlockStart = window.getComputedStyle(elem).marginBlockStart;
+        // Something Something security therefore we can't give a consistent value using window.getComputedStyle(elem).
+        // therefore, there is probably no way to easily apply margins of elements evenly
+        setTimeout(() => {
+            let margin = window.getComputedStyle(elem).marginBlockEnd;
+
+            this.before.style.marginBlockEnd = margin;
+            this.after.style.marginBlockEnd = margin;
+
+            // just a check
+            if (margin != "24.568px" && margin != "19.92px" && margin != "21.6px" && margin != "21.280px")
+            {
+                console.log(margin);
+                alert("Margin is not consistent, complain to browser devs");
+            }
+            
+        }, 5)
     }
 
     onChildsAppend(childs) {
