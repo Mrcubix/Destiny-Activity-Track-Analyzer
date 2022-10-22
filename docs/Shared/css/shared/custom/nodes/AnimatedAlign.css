@@ -4,9 +4,10 @@ animated-align {
     transition: flex 0.5s;
 }
 
+/* i cannot use ::before and ::after due to a somewhere outside of my code */
+/* document.adoptedStyleSheets stays empty, even when adding a new sheet */
 animated-align > span {
-    margin-block-start: calc(0.83em + 12px);
-    margin-block-end: calc(0.83em + 12px);
+    padding-bottom: 9.6px;
 
     transition: flex 1s;
     border-bottom: 1px solid #2f3132;
@@ -30,7 +31,7 @@ animated-align> span:last-child
         justify-content: center;
     }
 
-    animated-align> span:first-child {
+    animated-align > span:first-child {
         flex-grow: 1;
     }
 }

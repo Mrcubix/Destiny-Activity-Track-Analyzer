@@ -7,6 +7,9 @@ class AnimatedAlign extends HTMLElement {
         this.oldNodes = [];
         // this.lastElementChild is a lie
         this.lastActualChild = null;
+        this.before = null;
+        this.after = null
+        this.rules = [];
     }
 
     // https://stackoverflow.com/a/68537066/14919482
@@ -27,21 +30,23 @@ class AnimatedAlign extends HTMLElement {
         
         const children = Array.from(this.children);
 
-        const before = document.createElement("span");
-        this.insertBefore(before, children[0]);
-        
-        for (let i = 0; i < children.length; i++) {
-            const child = children[i];
+        this.before = document.createElement("span");
+        this.insertBefore(this.before, children[0]);
 
-            child.remove()
-            this.appendChild(child);
-            this.lastActualChild = child;
-        }
-
-        const after = document.createElement("span");
-        this.appendChild(after);
+        this.after = document.createElement("span");
+        this.appendChild(this.after);
 
         this.oldNodes = Array.from(this.childNodes);
+
+        this.setMarginOfSpanFromElem(children[0]);
+    }
+
+    setMarginOfSpanFromElem(elem) {
+        this.before.style.marginBlockEnd = window.getComputedStyle(elem).marginBlockEnd;
+        this.before.style.marginBlockStart = window.getComputedStyle(elem).marginBlockStart;
+
+        this.after.style.marginBlockEnd = window.getComputedStyle(elem).marginBlockEnd;
+        this.after.style.marginBlockStart = window.getComputedStyle(elem).marginBlockStart;
     }
 
     onChildsAppend(childs) {
@@ -79,7 +84,6 @@ class AnimatedAlign extends HTMLElement {
         // We don't want to call onChildsAppend if the nodes are already present (init)
         // this probably has some underlying issues
         added.forEach(child => {
-            console.log(child);
             // check if the child isn't already in the parentElement
             if (parent.oldNodes.includes(child)) {
                 contained++;
