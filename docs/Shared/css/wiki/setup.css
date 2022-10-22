@@ -23,7 +23,7 @@ section[class*="content"] > details > ul > li > ol > li a:hover {
     text-decoration: underline;
 }
 
-section[class*="content"] > section > section > ul > li > a:hover {
+section[class*="content"] > section > section > ul > li > * > a:hover {
     text-decoration: underline;
 }
 
@@ -33,6 +33,10 @@ ul[class*="decimal"], ol[class*="decimal"] {
 
 ul[class*="dot"], ol[class*="dot"]{
     list-style-type: circle;
+}
+
+section > ul {
+    margin: 0;
 }
 
 li {
@@ -47,11 +51,19 @@ img {
     max-width: 60%;
 }
 
-
-
 @media screen and (max-width: 768px) {
+
+    section > h1, section > h2, section > h3 {
+        text-align: center;
+    }
+
+    section > ul {
+        padding: 0 30px;
+    }
+
     li {
         font-size: 1.2rem;
+        margin-bottom: 0.9rem;
     }
 
     p {
@@ -60,12 +72,23 @@ img {
     }
 
     img {
-        object-fit: scale-down; 
-        max-width: 80%
+        max-width: 100%;
     }
 }
 
-@media screen and (max-width: 1600px) {
+@media screen and (min-width: 768px) and (max-width: 1160px) {
+    img {
+        max-width: 95%
+    }
+}
+
+@media screen and (min-width: 1160px) and (max-width: 1600px) {
+    img {
+        max-width: 70%
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1600px) {
     li {
         font-size: 1.2rem;
     }
@@ -73,9 +96,5 @@ img {
     p {
         margin: 0.5rem 0.5rem 0.65rem 0.5rem;;
         font-size: 1.2rem;
-    }
-
-    img {
-        max-width: 70%
     }
 }
