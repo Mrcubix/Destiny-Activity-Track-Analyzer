@@ -52,7 +52,6 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-
     section > h1, section > h2, section > h3 {
         text-align: center;
     }
@@ -73,18 +72,21 @@ img {
 
     img {
         max-width: 100%;
+        transition: all 0.5s;
     }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1160px) {
     img {
-        max-width: 95%
+        max-width: 95%;
+        transition: all 0.5s;
     }
 }
 
 @media screen and (min-width: 1160px) and (max-width: 1600px) {
     img {
-        max-width: 70%
+        max-width: 70%;
+        transition: all 0.5s;
     }
 }
 

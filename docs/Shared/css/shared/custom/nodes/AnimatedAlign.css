@@ -1,0 +1,36 @@
+animated-align {
+    display: flex;
+    flex-direction: row;
+    transition: flex 0.5s;
+}
+
+animated-align > span {
+    margin-block-start: calc(0.83em + 12px);
+    margin-block-end: calc(0.83em + 12px);
+
+    transition: flex 1s;
+    border-bottom: 1px solid #2f3132;
+    text-align: center;
+}
+
+/* before */
+animated-align> span:first-child {
+    flex-grow: 0;
+}
+
+/* after */
+animated-align> span:last-child
+{
+    flex-grow: 1;
+}
+
+@media screen and (max-width: 768px) {
+
+    animated-align {
+        justify-content: center;
+    }
+
+    animated-align> span:first-child {
+        flex-grow: 1;
+    }
+}
