@@ -9,6 +9,5 @@ namespace Tracker.Shared.Base
         public ObservableCollection<object> CurrentItemList { get; set; }
         public void NextPage();
         public void PreviousPage();
-        public string GetPageName();
     }
 }

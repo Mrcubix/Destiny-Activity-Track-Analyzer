@@ -1,8 +1,6 @@
 using System.Collections.ObjectModel;
 using Tracker.ViewModels;
 using ReactiveUI;
-using Tracker.Shared.Base;
-using System;
 
 namespace Tracker.Shared.Frontend
 {
@@ -46,21 +44,11 @@ namespace Tracker.Shared.Frontend
 
         public void AddVM(ViewModelBase vm)
         {
+            // Duplicates are not allowed
+            if (_viewModelNames.Contains(vm.Name))
+                return;
 
-            if (vm is PagedViewModelBase pagedVM)
-            {
-                if (_viewModelNames.Contains(pagedVM.GetPageName()))
-                    return;
-                
-                ViewModelNames.Add(pagedVM.GetPageName());
-            }
-            else
-            {
-                if (_viewModelNames.Contains(vm.GetType().Name))
-                    return;
-
-                ViewModelNames.Add(vm.GetType().Name);
-            }
+            ViewModelNames.Add(vm.Name);
             
             ViewModels.Add(vm);
 
@@ -70,9 +58,12 @@ namespace Tracker.Shared.Frontend
 
         public void AddVM(ViewModelBase vm, string name)
         {
+            // Duplicates are not allowed
             if (_viewModelNames.Contains(name))
                 return;
 
+            vm.Name = name;
+            
             ViewModels.Add(vm);
             ViewModelNames.Add(name);
 
@@ -83,15 +74,7 @@ namespace Tracker.Shared.Frontend
         public void RemoveVM(ViewModelBase vm)
         {
             ViewModels.Remove(vm);
-
-            if (vm is PagedViewModelBase pagedVM)
-            {
-                ViewModelNames.Remove(pagedVM.GetPageName());
-            }
-            else
-            {
-                ViewModelNames.Remove(vm.GetType().Name);
-            }
+            ViewModelNames.Remove(vm.Name);
         }
 
         public void RemoveVMByName(string name)

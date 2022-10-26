@@ -11,10 +11,9 @@
   </Design.DataContext>
 
   <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-    <StackPanel IsVisible="{Binding !Remote.SharedStores.SettingsStore.IsKeySet}">
+    <StackPanel Spacing="10" IsVisible="{Binding !Remote.SharedStores.SettingsStore.IsKeySet}">
       <TextBlock Text="This feature requires an API key to be set." HorizontalAlignment="Center" VerticalAlignment="Center"/>
-      <!-- TODO: Create SetupView (see plans for details) -->
-      <Button Command="" HorizontalAlignment="Center" VerticalAlignment="Center">Go to Setup</Button>
+      <Button Command="{Binding Remote.ShowView}" CommandParameter="Key Enquiry" HorizontalAlignment="Center" VerticalAlignment="Center">Go to Setup</Button>
     </StackPanel>
 
     <StackPanel IsVisible="{Binding Remote.SharedStores.SettingsStore.IsKeySet}">

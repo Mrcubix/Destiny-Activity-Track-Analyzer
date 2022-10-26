@@ -14,30 +14,27 @@
 
 #### When
 
-- [ ] API Key is null
+- [x] API Key is null
+- [x] Enabled in Settings
 
 #### Explain
 
-- [ ] Generate an API Key
-- [ ] Specify User Information
-    - [ ] API Key
+- [x] Generate an API Key
+- [x] Specify User Information
+    - [x] API Key
 
-- [ ] Save
+- [x] Save
     - [ ] Valid?
         => Show Startup View
-    - [ ] Invalid?
+    - [x] Invalid?
         => Show Error [OK]
 
 ### Skip
 
 #### Do
 
-- [ ] Single Field "API Key"
-- [ ] Button "Next"
-    - [ ] Valid?
-        => Start with new user Setup
-    - [ ] Invalid?
-        => Show Error [OK]
+- [x] "This feature requires an API key to be set."
+- [x] Button "Go to Setup"
 
 <p>ㅤ</p>
 
@@ -170,6 +167,7 @@ From left to right:
 
 <p>ㅤ</p>
 
+- [ ] Enquire user if no API key is provided (enabled by default)
 - [ ] Activities per pages (see [List Activity](#list-activity))
 - [ ] Weekly Completion Tracks per pages (see [Allow Weekly Completion](#allow-weekly-completion))
 - [ ] Number of Notification to be stored before deletion (see [Notification](#notification-system))

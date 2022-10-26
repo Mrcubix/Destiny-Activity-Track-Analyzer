@@ -6,9 +6,8 @@ namespace Tracker.ViewModels
     {
         public string Greeting => "Welcome to Avalonia!";
 
-        public MainViewModel(ViewRemote remote)
+        public MainViewModel(ViewRemote remote) : base(remote)
         {
-            Remote = remote;
         }
     }
 }

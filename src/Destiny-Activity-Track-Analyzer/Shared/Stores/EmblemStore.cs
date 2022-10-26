@@ -191,6 +191,8 @@ namespace Tracker.Shared.Stores
             byte[] emblemBackgroundBytes;
             byte[] emblemIconBytes;
 
+            Console.WriteLine($"Now downloading missing emblem components for {emblem.Hash}");
+
             if (!string.IsNullOrEmpty(emblem.EmblemPath) && !File.Exists(emblem.EmblemFilePath))
             {
                 emblemBytes = await api.SendRequest(new Uri($"https://bungie.net{emblem.EmblemPath}"));

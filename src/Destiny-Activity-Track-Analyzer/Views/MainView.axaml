@@ -12,6 +12,6 @@
 
   <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
     <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center"/>
-    <Button Command="{Binding Remote.ShowView}" CommandParameter="CurrentActivityViewModel" HorizontalAlignment="Center" Margin="0,20,0,0" >Go to List Page 0</Button>
+    <Button Command="{Binding Remote.ShowView}" CommandParameter="Current Activity" HorizontalAlignment="Center" Margin="0,20,0,0" >Go to List Page 0</Button>
   </StackPanel>
 </UserControl>

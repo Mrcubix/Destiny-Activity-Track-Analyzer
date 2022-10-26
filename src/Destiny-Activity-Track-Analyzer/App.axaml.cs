@@ -75,9 +75,10 @@ namespace Tracker
 
         public void LoadViewModels()
         {
-            Remote.AddVM(new CurrentActivityViewModel(API, Remote));
-            Remote.AddVM(new SettingsViewModel(Remote));
-            Remote.AddVM(new CharacterPickerViewModel(Remote));
+            Remote.AddVM(new CurrentActivityViewModel(API, Remote, "Current Activity"));
+            Remote.AddVM(new SettingsViewModel(Remote, "Settings"));
+            Remote.AddVM(new CharacterPickerViewModel(Remote, "Character Picker"));
+            Remote.AddVM(new KeyEnquiryViewModel(Remote, "Key Enquiry"));
         }
 
         public void InitializeConverters()

@@ -49,20 +49,18 @@ namespace Tracker.ViewModels
         }
 
 
-        public CurrentActivityViewModel(ViewRemote remote)
+        public CurrentActivityViewModel(ViewRemote remote, string name = "") : base(remote, name)
         {
             API = new(remote.SharedStores.SettingsStore.Settings.APISettings);
-            Remote = remote;
             ActivityDefinitions = Remote.SharedStores.DefinitionsStore.ActivityDefinitions;
 
             Initialize();
             _ = Task.Run(StartTrackingCurrentActivity);
         }
 
-        public CurrentActivityViewModel(Destiny2 api, ViewRemote remote)
+        public CurrentActivityViewModel(Destiny2 api, ViewRemote remote, string name = "") : base(remote, name)
         {
             API = api;
-            Remote = remote;
             ActivityDefinitions = Remote.SharedStores.DefinitionsStore.ActivityDefinitions;
 
             Initialize();

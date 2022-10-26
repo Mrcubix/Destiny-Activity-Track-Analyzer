@@ -5,24 +5,41 @@ namespace Tracker.ViewModels
 {
     public class ViewModelBase : ReactiveObject
     {
-        private ViewRemote remote = null!;
+        private string _name = null!;
+        private ViewRemote _remote = null!;
+
+        public string Name
+        {
+            get => _name;
+            set => this.RaiseAndSetIfChanged(ref _name, value);
+        }
 
         public ViewRemote Remote
         {
-            get => remote;
-            set => this.RaiseAndSetIfChanged(ref remote, value);
+            get => _remote;
+            set => this.RaiseAndSetIfChanged(ref _remote, value);
         }
         
         public ViewModelBase() {}
 
-        public ViewModelBase(ViewModelBase initialVM) 
+        public ViewModelBase(ViewModelBase initialVM, string name = "") 
         {
-            remote = new(initialVM);
+            this.Remote = new(initialVM);
+
+            if (string.IsNullOrEmpty(name))
+                this.Name = this.GetType().Name;
+            else
+                this.Name = name;
         }
 
-        public ViewModelBase(ViewRemote remote)
+        public ViewModelBase(ViewRemote remote, string name = "")
         {
-            this.remote = remote;
+            this.Remote = remote;
+
+            if (string.IsNullOrEmpty(name))
+                this.Name = this.GetType().Name;
+            else
+                this.Name = name;
         }
     }
 }

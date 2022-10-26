@@ -9,6 +9,7 @@ namespace Tracker.Shared.Stores.Component
     public class UXSettings : ReactiveObject
     {
         private Dictionary<DestinyComponentType, bool> _componentVisibility = new();
+        private bool _shouldEnquire = true;
         private int _tracksPerPage = 10;
         private int _activitiesPerPage = 10;
 
@@ -17,6 +18,12 @@ namespace Tracker.Shared.Stores.Component
         {
             get => _componentVisibility;
             set => this.RaiseAndSetIfChanged(ref _componentVisibility, value);
+        }
+
+        public bool ShouldEnquire
+        {
+            get => _shouldEnquire;
+            set => this.RaiseAndSetIfChanged(ref _shouldEnquire, value);
         }
 
         public int TracksPerPage

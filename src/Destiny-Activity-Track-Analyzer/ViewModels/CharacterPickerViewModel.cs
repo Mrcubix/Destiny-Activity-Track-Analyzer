@@ -21,9 +21,8 @@ namespace Tracker.ViewModels
             set => this.RaiseAndSetIfChanged(ref _defaultsStore, value);
         }
 
-        public CharacterPickerViewModel(ViewRemote remote)
+        public CharacterPickerViewModel(ViewRemote remote, string name = "") : base(remote, name)
         {
-            Remote = remote;
             UserStore = Remote.SharedStores.UserStore;
             DefaultsStore = Remote.SharedStores.DefaultsStore;
         }

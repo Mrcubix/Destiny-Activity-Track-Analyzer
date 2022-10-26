@@ -31,9 +31,8 @@ namespace Tracker.ViewModels
         }
 
 
-        public SettingsViewModel(ViewRemote remote)
+        public SettingsViewModel(ViewRemote remote, string name = "") : base(remote, name)
         {
-            Remote = remote;
             SettingsStore = Remote.SharedStores.SettingsStore;
             DefaultsStore = Remote.SharedStores.DefaultsStore;
             UserStore = Remote.SharedStores.UserStore;

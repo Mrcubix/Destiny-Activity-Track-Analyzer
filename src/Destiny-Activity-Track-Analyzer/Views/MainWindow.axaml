@@ -29,9 +29,10 @@
 
             <StackPanel Name="NavBar" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
                 <Button Command="{Binding Remote.ShowView}" CommandParameter="MainViewModel" >Home</Button>
-                <Button Command="{Binding Remote.ShowView}" CommandParameter="CurrentActivityViewModel" >Current</Button>
-                <Button Command="{Binding Remote.ShowView}" CommandParameter="SettingsViewModel" >Settings</Button>
-                <Button Command="{Binding Remote.ShowView}" CommandParameter="CharacterPickerViewModel" >Character Picker</Button>
+                <Button Command="{Binding Remote.ShowView}" CommandParameter="Current Activity" >Current</Button>
+                <Button Command="{Binding Remote.ShowView}" CommandParameter="Settings" >Settings</Button>
+                <Button Command="{Binding Remote.ShowView}" CommandParameter="Character Picker" >Character Picker</Button>
+                <Button Command="{Binding Remote.ShowView}" CommandParameter="Key Enquiry" >Key Enquiry</Button>
                 <Button Command="{Binding Remote.SharedStores.Update}"  IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}">Refresh</Button>
                 <TextBlock Text="DATA is Currently Updating manifests" IsVisible="{Binding Remote.SharedStores.DefinitionsStore.IsUpdating}" VerticalAlignment="Center"/>
             </StackPanel>
