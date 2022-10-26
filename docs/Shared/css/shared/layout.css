@@ -1,6 +1,6 @@
-html, body {
-    height: 100%
-}
+/*html, body {
+    height: calc(100% + 100px)
+}*/
 
 body {
     margin: 0;
