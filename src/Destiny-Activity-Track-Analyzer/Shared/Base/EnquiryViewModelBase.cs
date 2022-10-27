@@ -88,7 +88,7 @@ namespace Tracker.ViewModels
         /// <summary>
         ///     Check whether or not the view overriding it should be shown
         /// </summary>
-        /// <param name="settings">The current settings</param>
+        /// <param name="settings"> An instance of <see cref="Tracker.Shared.Stores.Component.AppSettings" /></param>
         /// <returns>Whether or not the view should be shown</returns>
         public abstract bool ShouldEnquire(AppSettings settings);
 
@@ -113,7 +113,7 @@ namespace Tracker.ViewModels
         /// </summary>
         /// <param name="sender">The sender of the event</param>
         /// <param name="settings">An instance of <see cref="Tracker.Shared.Stores.Component.AppSettings" /></param>
-        public virtual void OnSettingsChange(object? send, AppSettings settings)
+        public virtual void OnSettingsChange(object? sender, AppSettings settings)
         {
             this.API = new(settings.APISettings);
 
