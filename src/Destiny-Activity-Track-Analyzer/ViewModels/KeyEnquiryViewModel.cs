@@ -157,6 +157,9 @@ namespace Tracker.ViewModels
         public void OnSettingsChange(object? send, AppSettings settings)
         {
             this.API = new(settings.APISettings);
+
+            if (ShouldEnquire(settings))
+                Enquire();
         }
     }
 }
