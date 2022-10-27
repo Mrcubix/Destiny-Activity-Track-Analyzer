@@ -21,6 +21,7 @@ namespace Tracker.Shared.Stores
         private Destiny2 api = null!;
         private SettingsStore settings = null!;
         private Emblem[] cachedEmblems = new Emblem[3];
+        private bool hasLoaded = false;
 
 
         private UserStore _user = null!;
@@ -119,6 +120,9 @@ namespace Tracker.Shared.Stores
         /// </Summary>
         public async Task Update()
         {
+            if(hasLoaded)
+                return;
+
             IsUpdating = true;
             cachedEmblems = new Emblem[3];
 
@@ -232,6 +236,7 @@ namespace Tracker.Shared.Stores
         public void OnEmblemStoreLoadComplete(object? sender, Dictionary<uint, Emblem> info)
         {
             Console.WriteLine($"Successfully loaded EmblemStore");
+            hasLoaded = true;
         }
 
         /// <Summary>
