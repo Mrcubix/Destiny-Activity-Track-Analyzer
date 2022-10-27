@@ -33,6 +33,7 @@
                 <Button Command="{Binding Remote.ShowView}" CommandParameter="Settings" >Settings</Button>
                 <Button Command="{Binding Remote.ShowView}" CommandParameter="Character Picker" >Character Picker</Button>
                 <Button Command="{Binding Remote.ShowView}" CommandParameter="Key Enquiry" >Key Enquiry</Button>
+                <Button Command="{Binding Remote.ShowView}" CommandParameter="User Enquiry" >User Enquiry</Button>
                 <Button Command="{Binding Remote.SharedStores.Update}"  IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}">Refresh</Button>
                 <TextBlock Text="DATA is Currently Updating manifests" IsVisible="{Binding Remote.SharedStores.DefinitionsStore.IsUpdating}" VerticalAlignment="Center"/>
             </StackPanel>

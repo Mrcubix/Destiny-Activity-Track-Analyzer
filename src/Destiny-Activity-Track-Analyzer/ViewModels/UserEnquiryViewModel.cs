@@ -15,20 +15,22 @@ using Tracker.Shared.Stores.Component;
 
 namespace Tracker.ViewModels
 {
-    public class KeyEnquiryViewModel : EnquiryViewModelBase
+    public class UserEnquiryViewModel : EnquiryViewModelBase
     {
         private ProcessStartInfo psi = new("https://mrcubix.github.io/Destiny-Activity-Track-Analyzer/Wiki/Setup#Creating-A-New-Bungie-Application")
         {
             UseShellExecute = true
         };
 
-        public KeyEnquiryViewModel(ViewRemote remote, string name = "") : base(remote, name)
+        public UserEnquiryViewModel(ViewRemote remote, string name = "") : base(remote, name)
         {
         }
 
         public override bool ShouldEnquire(AppSettings settings)
         {
-            return !(SettingsStore.IsKeySet) && settings.UXSettings.ShouldEnquire;
+            bool keySet = SettingsStore.IsKeySet;
+
+            return UserStore.User.UserInfo == null && keySet && settings.UXSettings.ShouldEnquire;
         }
 
         public override void Enquire()
@@ -45,6 +47,7 @@ namespace Tracker.ViewModels
 
             CurrentError = "Verifying Validity...";
             ErrorColor = "White";
+
             List<UserInfoCard> users = null!;
 
             if (SettingsStore.IsKeySet)
@@ -54,7 +57,7 @@ namespace Tracker.ViewModels
                 // test if the key is valid by making a request
                 try
                 {
-                    users = await API.SearchDestinyPlayerByBungieName("Gess1t", 9111);
+                    users = await API.SearchDestinyPlayerByBungieName(SettingsStore.Settings.APISettings.Username, SettingsStore.Settings.APISettings.Tag);
                 }
                 catch(HttpRequestException E)
                 {
@@ -78,14 +81,32 @@ namespace Tracker.ViewModels
                     return;
             }
             
-            if(users != null)
+            if(users != null && users.Count > 0)
             {
+                if (users.Count == 1)
+                {
+                    UserStore.User.UserInfo = users[0];
+                    Remote.ShowView("Character Picker");
+                }
+                else
+                {
+                    // handle case where there are multiple platform?
+                    // TODO: Check if this is an actual concern
+                    UserStore.User.UserInfo = users[0];
+                    Remote.ShowView("Character Picker");
+                }
+
+                // TODO: check if the character is set
+                // if it is, then skip the rest of the Setup
+                // if not, then go to 'Setup View'
+
+                UserStore.Save();
+
                 CurrentError = "";
-                Remote.ShowView("User Enquiry");
             }
             else
             {
-                CurrentError = "Error: Invalid API Key";
+                CurrentError = "Error: Invalid Username or Tag (No users with such details found)";
                 ErrorColor = "Red";
             }
         }
@@ -98,26 +119,6 @@ namespace Tracker.ViewModels
                 Remote.ShowView(defaultView);
             else
                 Remote.ShowView("MainViewModel");
-        }
-
-        public void OpenWiki()
-        {
-            switch(SharedPlatformSpecificVariables.Platform.ToString())
-            {
-                case "Windows":
-                    Process.Start(psi);
-                    break;
-                case "Linux" or "FreeBSD":
-                    Process.Start("xdg-open", psi.FileName);
-                    break;
-                case "MacOS":
-                    Process.Start("open", psi.FileName);
-                    break;
-                default:
-                    throw new PlatformNotSupportedException("Your platform is not supported.");
-            }
-
-            Process.Start(psi);
         }
     }
 }

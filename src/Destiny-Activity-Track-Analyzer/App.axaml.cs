@@ -79,6 +79,7 @@ namespace Tracker
             Remote.AddVM(new SettingsViewModel(Remote, "Settings"));
             Remote.AddVM(new CharacterPickerViewModel(Remote, "Character Picker"));
             Remote.AddVM(new KeyEnquiryViewModel(Remote, "Key Enquiry"));
+            Remote.AddVM(new UserEnquiryViewModel(Remote, "User Enquiry"));
         }
 
         public void InitializeConverters()

@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:Tracker.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Tracker.Views.UserEnquiryView"
+             Foreground="White">
+  <Design.DataContext>
+    <viewModels:UserEnquiryViewModel />
+  </Design.DataContext>
+
+  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+    <TextBlock Text="Most Elements within this application initially require a User to be specified" />
+
+    <StackPanel Orientation="Horizontal" Margin="0 20" DataContext="{Binding SettingsStore.Settings.APISettings}">
+      <TextBlock Text="User Information:" VerticalAlignment="Center" HorizontalAlignment="Center" />
+      <TextBox  Watermark="Username"
+                Text="{Binding Username}"
+                Width="215"
+                Margin="10 0 0 0"
+                HorizontalAlignment="Left"/>
+      <NumericUpDown Value="{Binding Tag}" Increment="1" Minimum="0" Maximum="9999" Width="120" Margin="0 0 10 0" />
+      <Button Content="?" ToolTip.Tip="Self-explanatory, every Bungie account have a Username and a Tag going from 0 to 9999" />
+    </StackPanel>
+
+    <TextBlock Name="Error" Text="{Binding CurrentError}" IsEnabled="{Binding CurrentError, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="{Binding ErrorColor}" Margin="0 0 0 20" />
+
+    <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+      <Button Content="Save" Command="{Binding Save}" />
+      <Button Content="Skip" Command="{Binding Skip}" />
+    </StackPanel>
+  </StackPanel>
+</UserControl>

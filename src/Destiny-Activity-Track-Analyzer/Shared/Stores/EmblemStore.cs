@@ -120,7 +120,7 @@ namespace Tracker.Shared.Stores
         /// </Summary>
         public async Task Update()
         {
-            if(hasLoaded)
+            if(!hasLoaded)
                 return;
 
             IsUpdating = true;

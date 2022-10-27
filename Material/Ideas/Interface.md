@@ -24,7 +24,7 @@
     - [x] API Key
 
 - [x] Save
-    - [ ] Valid?
+    - [x] Valid?
         => Show Startup View
     - [x] Invalid?
         => Show Error [OK]
@@ -59,22 +59,30 @@
 
 ##### New Player View
 
-- [ ] 2 fields:
-    - [ ] Specify Username
-    - [ ] Specify Tag
+- [x] 2 fields:
+    - [x] Specify Username
+    - [x] Specify Tag
 
 - [x] Valid? (SearchPlayerByBungieName w/ count == 1)
     - [x] Save
-    - [ ] Prompt User if they want DATA to generate the Activity list
-    => Track current Activity
+    => Select Character
 - [ ] May Be Valid? (May not be possible, the endpoint only return duped UserInfo when using different platforms)
     - [ ] Show list of players found
         - [ ] Format `Player#Tag - Platform`
         => Valid?
-- [ ] Invalid?
-    - [ ] Show error message [OK]
+- [x] Invalid?
+    - [x] Show error message [OK]
 
 <p>ㅤ</p>
+
+##### Select Character
+
+- [x] Show list of characters
+    - [x] Format `Class - Race - Light`
+
+- [ ] When Selected
+    - [ ] Prompt User if they want DATA to generate the Activity list
+        => Track current Activity
 
 ## Track Current Activity
 
@@ -167,7 +175,7 @@ From left to right:
 
 <p>ㅤ</p>
 
-- [ ] Enquire user if no API key is provided (enabled by default)
+- [x] Enquire user if no API key is provided (enabled by default)
 - [ ] Activities per pages (see [List Activity](#list-activity))
 - [ ] Weekly Completion Tracks per pages (see [Allow Weekly Completion](#allow-weekly-completion))
 - [ ] Number of Notification to be stored before deletion (see [Notification](#notification-system))

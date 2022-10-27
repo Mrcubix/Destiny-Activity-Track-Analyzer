@@ -38,7 +38,7 @@ namespace Tracker.Views
             var dataContext = (CharacterPickerViewModel?)this.DataContext;
                 
             if (!firstLoad)
-                dataContext?.OnCharacterSelect(item.GetCharacterId());
+                dataContext?.Save(item.GetCharacterId());
             else
                 firstLoad = false;
         }

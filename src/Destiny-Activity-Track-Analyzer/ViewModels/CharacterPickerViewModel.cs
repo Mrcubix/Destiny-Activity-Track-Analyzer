@@ -1,36 +1,43 @@
-using ReactiveUI;
+using System.Threading.Tasks;
 using Tracker.Shared.Frontend;
 using Tracker.Shared.Stores;
+using Tracker.Shared.Stores.Component;
 
 namespace Tracker.ViewModels
 {
-    public class CharacterPickerViewModel : ViewModelBase
+    public class CharacterPickerViewModel : EnquiryViewModelBase
     {
-        private UserStore _userStore = null!;
-        private DefaultsStore _defaultsStore = null!;
-
-        public UserStore UserStore
-        {
-            get => _userStore;
-            set => this.RaiseAndSetIfChanged(ref _userStore, value);
-        }
-
-        public DefaultsStore DefaultsStore
-        {
-            get => _defaultsStore;
-            set => this.RaiseAndSetIfChanged(ref _defaultsStore, value);
-        }
-
         public CharacterPickerViewModel(ViewRemote remote, string name = "") : base(remote, name)
         {
-            UserStore = Remote.SharedStores.UserStore;
-            DefaultsStore = Remote.SharedStores.DefaultsStore;
         }
 
-        public void OnCharacterSelect(long id)
+        public override bool ShouldEnquire(AppSettings settings)
+        {
+            bool keySet = SettingsStore.IsKeySet;
+
+            return UserStore.User.CurrentCharacter == null && keySet && settings.UXSettings.ShouldEnquire;
+        }
+
+        public override void Enquire()
+        {
+            Remote.ShowView("Character Picker");
+        }
+
+        public override async Task Save()
+        {
+            await Task.Delay(0);
+        }
+
+        public void Save(long id)
         {
             UserStore.SetCharacter(UserStore.User.Characters[id]);
-            Remote.ShowView("CurrentActivityViewModel");
+            UserStore.Save();
+            Remote.ShowView("Current Activity");
+        }
+
+        public override void Skip()
+        {
+
         }
     }
 }
