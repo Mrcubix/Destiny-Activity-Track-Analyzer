@@ -116,8 +116,6 @@ namespace Tracker.ViewModels
                 default:
                     throw new PlatformNotSupportedException("Your platform is not supported.");
             }
-
-            Process.Start(psi);
         }
     }
 }
