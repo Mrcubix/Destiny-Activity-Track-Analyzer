@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tracker.Shared.Interfaces;
@@ -8,14 +9,18 @@ namespace Tracker.Shared
 {
     public class SharedStores : IStore
     {
-        public List<IStore> Stores = new();
+        public event EventHandler<SharedStores> StoresLoaded = null!;
+        public event EventHandler<SharedStores> StoresUpdated = null!;
 
+        public List<IStore> Stores { get; set; } = new();
+
+        public bool HasLoaded { get; set; } = false;
         public DefinitionsStore DefinitionsStore { get; set; }
         public SettingsStore SettingsStore { get; set; }
         public DefaultsStore DefaultsStore { get; set; }
         public UserStore UserStore { get; set; }
         public IconStore IconStore { get; set; }
-        public EmblemStore EmblemStore { get; set;}
+        public EmblemStore EmblemStore { get; set; }
         // Store emblem icon, background, and maybe more...
         // Depend on whether or not i won't have to load Gigabytes of items in json
 
@@ -64,6 +69,10 @@ namespace Tracker.Shared
         {
             foreach(IStore store in Stores)
                 store.Load();
+
+            HasLoaded = true;
+
+            StoresLoaded?.Invoke(this, this);
         }
 
         /// <Summary>
@@ -80,6 +89,8 @@ namespace Tracker.Shared
             SettingsStore.Update();
             _ = Task.Run(UserStore.Update);
             _ = Task.Run(EmblemStore.Update);
+
+            StoresUpdated?.Invoke(this, this);
         }
     }
 }

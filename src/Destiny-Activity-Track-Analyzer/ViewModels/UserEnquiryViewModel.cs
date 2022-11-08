@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using API.Endpoints;
 using API.Entities.User;
 using ReactiveUI;
+using Tracker.Shared;
 using Tracker.Shared.Frontend;
 using Tracker.Shared.Static;
 using Tracker.Shared.Stores;
@@ -26,16 +27,22 @@ namespace Tracker.ViewModels
         {
         }
 
-        public override bool ShouldEnquire(AppSettings settings)
+        public override bool ShouldEnquire(SharedStores stores)
         {
             bool keySet = SettingsStore.IsKeySet;
 
-            return UserStore.User.UserInfo == null && keySet && settings.UXSettings.ShouldEnquire;
+            if (!Remote.SharedStores.HasLoaded)
+                return false;
+
+            if (!keySet)
+                return false;
+
+            return !UserStore.IsUserSet && SettingsStore.Settings.UXSettings.ShouldEnquire;
         }
 
         public override void Enquire()
         {
-            Remote.ShowView("Key Enquiry");
+            Remote.ShowView("User Enquiry");
         }
 
         public override async Task Save()

@@ -16,6 +16,7 @@ namespace Tracker.Shared.Stores
 
         private bool _isKeySet;
         private AppSettings _settings = new();
+        private bool _hasLoaded = false;
 
         public event EventHandler<AppSettings> SettingsLoaded = null!;
         public event EventHandler<AppSettings> SettingsUpdated = null!;
@@ -27,6 +28,15 @@ namespace Tracker.Shared.Stores
         {
             get => _isKeySet;
             set => this.RaiseAndSetIfChanged(ref _isKeySet, value);
+        }
+
+        /// <Summary>
+        ///   State whether the settings have been loaded or not
+        /// </Summary>
+        public bool HasLoaded
+        {
+            get => _hasLoaded;
+            set => this.RaiseAndSetIfChanged(ref _hasLoaded, value);
         }
         
         /// <Summary>
@@ -103,8 +113,10 @@ namespace Tracker.Shared.Stores
         /// <Summary>
         ///   Method triggered on <see cref="SettingsLoaded" /> event
         /// </Summary>
-        public void OnSettingsLoadComplete(object? sender, AppSettings settings)
+        private void OnSettingsLoadComplete(object? sender, AppSettings settings)
         {
+            HasLoaded = true;
+
             var key = settings.APISettings.Key;
 
             IsKeySet = !string.IsNullOrEmpty(key) && key.Length == 32;
@@ -115,7 +127,7 @@ namespace Tracker.Shared.Stores
         /// <Summary>
         ///   Method triggered on <see cref="SettingsUpdated" /> event
         /// </Summary>
-        public void OnSettingsUpdateComplete(object? sender, AppSettings settings)
+        private void OnSettingsUpdateComplete(object? sender, AppSettings settings)
         {
             var key = settings.APISettings.Key;
 

@@ -2,16 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Security.Authentication;
 using System.Threading.Tasks;
-using API.Endpoints;
 using API.Entities.User;
-using ReactiveUI;
+using Tracker.Shared;
 using Tracker.Shared.Frontend;
 using Tracker.Shared.Static;
 using Tracker.Shared.Stores;
-using Tracker.Shared.Stores.Component;
 
 namespace Tracker.ViewModels
 {
@@ -26,9 +23,12 @@ namespace Tracker.ViewModels
         {
         }
 
-        public override bool ShouldEnquire(AppSettings settings)
+        public override bool ShouldEnquire(SharedStores stores)
         {
-            return !(SettingsStore.IsKeySet) && settings.UXSettings.ShouldEnquire;
+            if (!Remote.SharedStores.HasLoaded)
+                return false;
+                
+            return !(SettingsStore.IsKeySet) && SettingsStore.Settings.UXSettings.ShouldEnquire;
         }
 
         public override void Enquire()

@@ -24,7 +24,10 @@ namespace Tracker.Shared.Stores
         private DefaultsStore defaults = null!;
 
         private User _user = new();
+        private bool _isUserSet = false;
+        public bool _hasLoaded = false;
         private bool _isUpdating = false;
+
 
         public event EventHandler<User> UserLoaded = null!;
         public event EventHandler<User> UserUpdated = null!;
@@ -36,11 +39,24 @@ namespace Tracker.Shared.Stores
             set => this.RaiseAndSetIfChanged(ref _user, value);
         }
 
+        public bool IsUserSet
+        {
+            get => _isUserSet;
+            set => this.RaiseAndSetIfChanged(ref _isUserSet, value);
+        }
+
+        public bool HasLoaded
+        {
+            get => _hasLoaded;
+            set => this.RaiseAndSetIfChanged(ref _hasLoaded, value);
+        }
+
         public bool IsUpdating
         {
             get => _isUpdating;
             set => this.RaiseAndSetIfChanged(ref _isUpdating, value);
         }
+
 
         public UserStore(SettingsStore settings, DefaultsStore defaults)
         {
@@ -49,10 +65,26 @@ namespace Tracker.Shared.Stores
             api = new(settings.Settings.APISettings);
         }
 
-        /// <summary>
-        /// Set the <see cref="User.CurrentCharacter"/> to the specified value and invoke the <see cref="CurrentCharacterChanged"/> event. <br/>
-        /// The real purpose of this method is to be able to detect character changes even when the reference of <see cref="User"/> is changed.
-        /// </summary>
+
+        /// <Summary>
+        ///   User is outdated when one of the following is true: <br/>
+        ///     - BungieGlobalDisplayName or BungieGlobalDisplayNameCode doesn't match with settings.APISettings <br/>
+        /// </Summary>
+        /// <Returns>
+        ///   True if user is outdated, false otherwise
+        /// </Returns>
+        public bool IsUserOutdated()
+        {
+            var settings = this.settings.Settings.APISettings;
+            var info = User.UserInfo;
+            
+            return info.BungieGlobalDisplayName != settings.Username || info.BungieGlobalDisplayNameCode != settings.Tag;
+        }
+
+        /// <Summary>
+        ///   Set the <see cref="User.CurrentCharacter"/> to the specified value and invoke the <see cref="CurrentCharacterChanged"/> event. <br/>
+        ///   The real purpose of this method is to be able to detect character changes even when the reference of <see cref="User"/> is changed.
+        /// </Summary>
         public void SetCharacter(DestinyCharacterComponent character)
         {
             User.CurrentCharacter = character;
@@ -119,6 +151,9 @@ namespace Tracker.Shared.Stores
             api = new(apiSettings);
 
             if (!settings.IsKeySet)
+                return;
+
+            if (!IsUserOutdated())
                 return;
 
             // STEP 1: Check if the user is the same as current
@@ -209,21 +244,30 @@ namespace Tracker.Shared.Stores
         /// <Summary>
         ///   Method triggered on <see cref="UserLoaded"/> event
         /// </Summary>
-        public void OnUserLoadComplete(object? sender, User info)
+        private void OnUserLoadComplete(object? sender, User info)
         {
+            HasLoaded = true;
+
+            var isoutdated = IsUserOutdated();
+
+            IsUserSet = User.UserInfo != null && !isoutdated;
+
             Console.WriteLine($"Successfully loaded User");
         }
 
         /// <Summary>
         ///   Method triggered on <see cref="UserUpdated"/> event
         /// </Summary>
-        public void OnUserUpdateComplete(object? sender, User info)
+        private void OnUserUpdateComplete(object? sender, User info)
         {
             IsUpdating = false;
             Console.WriteLine($"Successfully updated User");
         }
 
-        public void OnCharacterChange(object? sender, DestinyCharacterComponent character)
+        /// <Summary>
+        ///   Method triggered on <see cref="UserUpdated"/> event
+        /// </Summary>
+        private void OnCharacterChange(object? sender, DestinyCharacterComponent character)
         {
             Console.WriteLine("Character changed");
         }

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Tracker.Shared;
 using Tracker.Shared.Frontend;
 using Tracker.Shared.Stores;
 using Tracker.Shared.Stores.Component;
@@ -11,11 +12,20 @@ namespace Tracker.ViewModels
         {
         }
 
-        public override bool ShouldEnquire(AppSettings settings)
+        public override bool ShouldEnquire(SharedStores stores)
         {
             bool keySet = SettingsStore.IsKeySet;
 
-            return UserStore.User.CurrentCharacter == null && keySet && settings.UXSettings.ShouldEnquire;
+
+            // Has the settings loaded yet?
+            if (!Remote.SharedStores.HasLoaded)
+                return false;
+
+            // Are the other properties set? (To avoid conflicts with other enquiries)
+            if (!keySet || !UserStore.IsUserSet)
+                return false;
+
+            return UserStore.User.CurrentCharacter == null && SettingsStore.Settings.UXSettings.ShouldEnquire;
         }
 
         public override void Enquire()

@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Security.Authentication;
 using System.Text.Json;
 using System.Threading.Tasks;
-using API.Endpoints;
-using API.Entities.User;
-using API.Enums;
 using ReactiveUI;
 using Tracker.Shared.Interfaces;
 using Tracker.Shared.Static;
@@ -18,6 +13,7 @@ namespace Tracker.Shared.Stores
     public class DefaultsStore : ReactiveObject, IStore
     {
         private Defaults _defaults = new();
+        private bool _hasLoaded = false;
 
         public event EventHandler<Defaults> DefaultsLoaded = null!;
         public event EventHandler<Defaults> DefaultsUpdated = null!;
@@ -28,6 +24,13 @@ namespace Tracker.Shared.Stores
             set => this.RaiseAndSetIfChanged(ref _defaults, value);
         }
 
+        public bool HasLoaded
+        {
+            get => _hasLoaded;
+            set => this.RaiseAndSetIfChanged(ref _hasLoaded, value);
+        }
+
+
         public DefaultsStore(ViewModelBase vm)
         {
             Defaults.DefaultViewModelName = vm.GetType().Name;
@@ -36,6 +39,7 @@ namespace Tracker.Shared.Stores
         public DefaultsStore()
         {
         }
+
 
         public void Initialize()
         {
@@ -94,7 +98,7 @@ namespace Tracker.Shared.Stores
         /// <Summary>
         ///   Method triggered on <see cref="InformationLoaded"/> event
         /// </Summary>
-        public void OnDefaultsLoadComplete(object? sender, Defaults info)
+        private void OnDefaultsLoadComplete(object? sender, Defaults info)
         {
             Console.WriteLine($"Successfully loaded Defaults");
         }
@@ -102,7 +106,7 @@ namespace Tracker.Shared.Stores
         /// <Summary>
         ///   Method triggered on <see cref="InformationUpdated"/> event
         /// </Summary>
-        public void OnDefaultsUpdateComplete(object? sender, Defaults info)
+        private void OnDefaultsUpdateComplete(object? sender, Defaults info)
         {
             Console.WriteLine($"Successfully updated Defaults");
         }

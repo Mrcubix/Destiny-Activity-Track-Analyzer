@@ -42,17 +42,17 @@
 
 ### Player choice
 
-#### No current player
+#### No default player
 
 => Start with new user Setup
 
-#### Continue with current player
+#### Continue with default player
 
 - [x] Means that a default player has been specified
     - %localappdata%/DATA/Defaults.json
-        - [ ] Valid?
-            => Track current Activity
-        - [ ] Invalid?
+        - [x] Valid?
+            => Default View
+        - [x] Invalid?
             => Start with new user Setup
 
 #### Start with new user Setup

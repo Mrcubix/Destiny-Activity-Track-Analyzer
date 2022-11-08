@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using API.Entities.Characters;
-using API.Entities.User;
 using ReactiveUI;
 
 namespace Tracker.Shared.Stores.Component

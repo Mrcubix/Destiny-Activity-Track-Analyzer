@@ -21,6 +21,7 @@ namespace Tracker.Shared.Stores
         
 
         private bool _isUpdating = false;
+        private bool _hasLoaded = false;
         private Dictionary<string, object> _definitions = null!;
         private Definition<DestinyActivityDefinition> _activityDefinitions = new("DestinyActivityDefinition");
         private Definition<DestinyActivityModeDefinition> _activityModeDefinitions = new("DestinyActivityModeDefinition");
@@ -30,7 +31,16 @@ namespace Tracker.Shared.Stores
 
 
         /// <Summary>
-        ///   State whether one of more Definition is getting updated
+        ///     State whether one or more definitions have loaded
+        /// </Summary>
+        public bool HasLoaded
+        {
+            get => _hasLoaded;
+            set => this.RaiseAndSetIfChanged(ref _hasLoaded, value);
+        }
+
+        /// <Summary>
+        ///   State whether one or more Definition is getting updated
         /// </Summary>
         public bool IsUpdating
         {
@@ -227,7 +237,7 @@ namespace Tracker.Shared.Stores
         /// <Summary>
         ///   Method triggered on <see cref="DefinitionsLoaded"/> event
         /// </Summary>
-        public void OnLoadCompletion(object? sender, Dictionary<string, object> definitions)
+        private void OnLoadCompletion(object? sender, Dictionary<string, object> definitions)
         {
             Console.WriteLine("Definition Load Complete");
         }
@@ -235,7 +245,7 @@ namespace Tracker.Shared.Stores
         /// <Summary>
         ///   Method triggered on <see cref="DefinitionsLoaded"/> event
         /// </Summary>
-        public void OnUpdateCompletion(object? sender, Dictionary<string, object> definitions)
+        private void OnUpdateCompletion(object? sender, Dictionary<string, object> definitions)
         {
             Console.WriteLine("Definition Update Complete");
             IsUpdating = false;

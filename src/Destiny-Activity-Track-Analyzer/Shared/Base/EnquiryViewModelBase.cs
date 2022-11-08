@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using API.Endpoints;
 using ReactiveUI;
+using Tracker.Shared;
 using Tracker.Shared.Frontend;
 using Tracker.Shared.Stores;
 using Tracker.Shared.Stores.Component;
@@ -82,7 +83,7 @@ namespace Tracker.ViewModels
         /// </summary>
         public virtual void Initialize()
         {
-            SettingsStore.SettingsUpdated += OnSettingsChange;
+            Remote.SharedStores.StoresLoaded += OnSettingsChange;
         }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace Tracker.ViewModels
         /// </summary>
         /// <param name="settings"> An instance of <see cref="Tracker.Shared.Stores.Component.AppSettings" /></param>
         /// <returns>Whether or not the view should be shown</returns>
-        public abstract bool ShouldEnquire(AppSettings settings);
+        public abstract bool ShouldEnquire(SharedStores stores);
 
         /// <summary>
         ///     Show the overriding view
@@ -113,11 +114,11 @@ namespace Tracker.ViewModels
         /// </summary>
         /// <param name="sender">The sender of the event</param>
         /// <param name="settings">An instance of <see cref="Tracker.Shared.Stores.Component.AppSettings" /></param>
-        public virtual void OnSettingsChange(object? sender, AppSettings settings)
+        public virtual void OnSettingsChange(object? sender, SharedStores stores)
         {
-            this.API = new(settings.APISettings);
+            this.API = new(SettingsStore.Settings.APISettings);
 
-            if (ShouldEnquire(settings))
+            if (ShouldEnquire(stores))
                 Enquire();
         }
     }

@@ -17,11 +17,13 @@ namespace Tracker.Shared.Stores
 {
     public class EmblemStore : ReactiveObject, IStore
     {
+        private bool _hasLoaded = false;
+
+
         // TODO: All instances of API need to be moved elsewhere later on
         private Destiny2 api = null!;
         private SettingsStore settings = null!;
         private Emblem[] cachedEmblems = new Emblem[3];
-        private bool hasLoaded = false;
 
 
         private UserStore _user = null!;
@@ -43,6 +45,12 @@ namespace Tracker.Shared.Stores
         {
             get => _emblems;
             set => this.RaiseAndSetIfChanged(ref _emblems, value);
+        }
+
+        public bool HasLoaded
+        {
+            get => _hasLoaded;
+            set => this.RaiseAndSetIfChanged(ref _hasLoaded, value);
         }
 
         public bool IsUpdating
@@ -120,7 +128,7 @@ namespace Tracker.Shared.Stores
         /// </Summary>
         public async Task Update()
         {
-            if(!hasLoaded)
+            if(!HasLoaded)
                 return;
 
             IsUpdating = true;
@@ -233,16 +241,16 @@ namespace Tracker.Shared.Stores
         /// <Summary>
         ///   Method triggered on <see cref="EmblemsLoaded"/> event
         /// </Summary>
-        public void OnEmblemStoreLoadComplete(object? sender, Dictionary<uint, Emblem> info)
+        private void OnEmblemStoreLoadComplete(object? sender, Dictionary<uint, Emblem> info)
         {
+            HasLoaded = true;
             Console.WriteLine($"Successfully loaded EmblemStore");
-            hasLoaded = true;
         }
 
         /// <Summary>
         ///   Method triggered on <see cref="EmblemsUpdated"/> event
         /// </Summary>
-        public void OnEmblemStoreUpdateComplete(object? sender, Dictionary<uint, Emblem> info)
+        private void OnEmblemStoreUpdateComplete(object? sender, Dictionary<uint, Emblem> info)
         {
             IsUpdating = false;
             Console.WriteLine($"Successfully updated EmblemStore");

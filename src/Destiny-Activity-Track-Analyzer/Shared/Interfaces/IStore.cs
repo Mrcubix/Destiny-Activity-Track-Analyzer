@@ -4,6 +4,9 @@ namespace Tracker.Shared.Interfaces
 {
     public interface IStore
     {
+        public bool HasLoaded { get; set; }
+
+        
         void Load();
 
         void Initialize();

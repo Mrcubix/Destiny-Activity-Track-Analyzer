@@ -11,12 +11,19 @@ namespace Tracker.Shared.Stores
 {
     public class IconStore : ReactiveObject, IStore
     {
+        private bool _hasLoaded = false;
+
         private static string? AssemblyName { get; set; } = Assembly.GetExecutingAssembly().GetName().Name;
         private IAssetLoader? AssetsLoader { get; set;}
 
 
         public event EventHandler<Dictionary<int, Bitmap?>> IconsLoaded = null!;
 
+        public bool HasLoaded
+        {
+            get => _hasLoaded;
+            set => this.RaiseAndSetIfChanged(ref _hasLoaded, value);
+        }
 
         // Dictionary of ActivityModeType to Icon, stored in Avalonia's AssetLoader
         public Dictionary<int, string> IconPaths { get; set; } = new()
@@ -129,6 +136,7 @@ namespace Tracker.Shared.Stores
 
             loadedIcons.Clear();
 
+            
             IconsLoaded?.Invoke(this, ActivityIcons);
 
             Console.WriteLine("TODO: I might want to load them from a file in the future");

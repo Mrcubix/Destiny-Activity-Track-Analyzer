@@ -21,6 +21,7 @@ namespace Tracker.Shared.Stores.Component
         private string _name = "";
         private string _filePath = "";
         private bool _isEmpty = true;
+        private bool _hasLoaded = false;
 
         public event EventHandler<Dictionary<uint, T>> DefinitionLoaded = null!;
         public event EventHandler<Dictionary<uint, T>> DefinitionUpdated = null!;
@@ -61,6 +62,14 @@ namespace Tracker.Shared.Stores.Component
             set => this.RaiseAndSetIfChanged(ref _isEmpty, value);
         }
 
+        /// <Summary>
+        ///   Property existing for the sole purpose of knowing if the definition has loaded
+        /// </Summary>
+        public bool HasLoaded
+        {
+            get => _hasLoaded;
+            set => this.RaiseAndSetIfChanged(ref _hasLoaded, value);
+        }
 
         public Definition(string name)
         {
