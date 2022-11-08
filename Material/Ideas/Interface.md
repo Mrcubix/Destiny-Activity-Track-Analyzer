@@ -89,7 +89,7 @@
 ### Activity
 
 - [x] Name
-- [ ] Time Elapsed since started
+- [x] Time Elapsed since started
 - [ ] Completion count
 
 ### Current

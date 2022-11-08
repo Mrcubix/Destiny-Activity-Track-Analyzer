@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Tracker.ViewModels"
+             xmlns:converters="using:Tracker.Shared.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Tracker.Views.CurrentActivityView"
              Foreground="White">
@@ -20,6 +21,7 @@
       <Image Source="{Binding CurrentModeIcon}" Width="96" Height="96" />
       <TextBlock Text="{Binding CurrentActivity.DisplayProperties.Name, FallbackValue='Not in Activity'}"  IsVisible="{Binding !InOrbit}" IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}" Margin="0 10 0 0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
       <TextBlock Text="Currently in Orbit" IsVisible="{Binding IsInOrbit}" IsEnabled="{Binding Remote.SharedStores.SettingsStore.IsKeySet}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+      <TextBlock Text="{Binding TimeElapsed}" IsVisible="{Binding ShouldShowTimer}" IsEnabled="{Binding !CurrentActivity.Hash}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Width="150"/>
     </StackPanel>
   </StackPanel>
 </UserControl>

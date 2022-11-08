@@ -6,6 +6,7 @@ using API.Endpoints;
 using API.Entities.Characters;
 using API.Entities.Definitions;
 using Avalonia.Media.Imaging;
+using Avalonia.Threading;
 using ReactiveUI;
 using Tracker.Shared.Frontend;
 using Tracker.Shared.Stores.Component;
@@ -14,14 +15,26 @@ namespace Tracker.ViewModels
 {
     public class CurrentActivityViewModel : ViewModelBase
     {
+        private const double second = 1000;
+        private const double minute = second * 60;
+        private const double hour = minute * 60;
+        private const double day = hour * 24;
+
         private Definition<DestinyActivityDefinition> ActivityDefinitions;
         private Destiny2 API { get; set; }
+        private DispatcherTimer timer = new() 
+        {
+            Interval = TimeSpan.FromMilliseconds(15)
+        };
 
 
         private bool _isInOrbit = false;
         private DestinyCharacterComponent _currentCharacter = null!;
         private Bitmap? _currentModeIcon = null!;
         private DestinyActivityDefinition _currentActivity = null!;
+        private DateTime _dateStarted = DateTime.Now;
+        private string _timeElapsed = "";
+        private bool _shouldShowTimer = false;
         
         
         public DestinyCharacterComponent CurrentCharacter
@@ -42,10 +55,28 @@ namespace Tracker.ViewModels
             set => this.RaiseAndSetIfChanged(ref _currentActivity, value);
         }
 
+        public DateTime DateStarted
+        {
+            get => _dateStarted;
+            set => this.RaiseAndSetIfChanged(ref _dateStarted, value);
+        }
+
+        public string TimeElapsed
+        {
+            get => _timeElapsed;
+            set => this.RaiseAndSetIfChanged(ref _timeElapsed, value);
+        }
+
         public bool IsInOrbit 
         {
             get => _isInOrbit;
             set => this.RaiseAndSetIfChanged(ref _isInOrbit, value);
+        }
+
+        public bool ShouldShowTimer
+        {
+            get => _shouldShowTimer;
+            set => this.RaiseAndSetIfChanged(ref _shouldShowTimer, value);
         }
 
 
@@ -58,6 +89,30 @@ namespace Tracker.ViewModels
             _ = Task.Run(StartTrackingCurrentActivity);
         }
 
+
+        public void StartTimer()
+        {
+            try
+            {
+                timer.Start();
+                
+                timer.Tick += delegate {
+                    var elapsed = DateTime.Now - DateStarted;
+                
+                    TimeElapsed = elapsed.TotalMilliseconds switch
+                    {
+                        < minute => $"{elapsed.Seconds}.{elapsed.Milliseconds}",
+                        >= minute and < hour => elapsed.ToString(@"mm\:ss\.fff"),
+                        >= hour and < day => elapsed.ToString(@"hh\:mm\:ss\.fff"),
+                        _ => elapsed.ToString(@"dd\:hh\:mm\:ss\.fff")
+                    };
+                };
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
 
         public void Initialize()
         {
@@ -92,6 +147,11 @@ namespace Tracker.ViewModels
                         // We don't really want to replace the current activity if it's the same
                         if (CurrentActivity == null || CurrentActivity.Hash != activity.CurrentActivityHash)
                         {
+                            // setup timer
+                            DateStarted = activity.DateActivityStarted;
+                            ShouldShowTimer = true;
+                            StartTimer();
+
                             CurrentActivity = ActivityDefinitions.Items[activity.CurrentActivityHash];
 
                             // Some activities may not have an activity type (eg: Orbit)
@@ -109,6 +169,9 @@ namespace Tracker.ViewModels
                         // About the same thing as above
                         if (CurrentActivity != null || CurrentActivity?.Hash != 0)
                         {
+                            timer.Stop();
+                            ShouldShowTimer = false;
+
                             CurrentActivity = null!;
                             CurrentModeIcon = Remote.SharedStores.IconStore.ActivityIcons[0];
                             IsInOrbit = false;
