@@ -1,0 +1,54 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Tracker.Controls.Templates.Activity.List"
+        xmlns:component="using:API.Entities.Characters"
+        xmlns:converters="using:Tracker.Shared.Converters">
+        
+  <Design.PreviewWith>
+    <controls:ActivityListElementControl />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|ActivityListElementControl">
+
+    <Style.Resources>
+
+    </Style.Resources>
+
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="45*" MinHeight="20"/>
+            <RowDefinition Height="25*" MinHeight="20"/>
+            <RowDefinition Height="30*" MinHeight="20"/>
+          </Grid.RowDefinitions>
+
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="33.3*" MinWidth="160"/>
+            <ColumnDefinition Width="33.4*" MinWidth="160"/>
+            <ColumnDefinition Width="33.3*" MinWidth="160"/>
+          </Grid.ColumnDefinitions>
+        
+          <StackPanel Grid.Column="0">
+            <TextBlock Name="Kills" Text="{Binding Kills}" Grid.Row="0" Width="50" />
+            <TextBlock Name="Deaths" Text="{Binding Deaths}" Grid.Row="1" Width="50" />
+            <TextBlock Name="Assists" Text="{Binding Assists}" Grid.Row="2" Width="50" />
+          </StackPanel>
+          
+          <StackPanel Grid.Column="1">
+            <TextBlock Name="KDA" Text="{Binding KDA}" Width="50" />
+            <TextBlock Name="Score" Text="{Binding Score}" Width="110" />
+          </StackPanel>
+
+          <StackPanel Grid.Column="2">
+            <TextBlock Name="ACT" Text="{Binding ACT}" Grid.Row="0" Width="150" />
+            <TextBlock Name="LCompletion" Text="{Binding LastCompletion}" Grid.Row="1" Width="150" />
+            <TextBlock Name="Details" Text="To Be Added..." Grid.Row="2" Width="140" />
+          </StackPanel>
+          
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

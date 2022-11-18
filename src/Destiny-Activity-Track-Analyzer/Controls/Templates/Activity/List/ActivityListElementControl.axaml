@@ -1,0 +1,36 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:Tracker.Controls.Templates.Activity.List"
+        xmlns:component="using:API.Entities.Characters"
+        xmlns:converters="using:Tracker.Shared.Converters">
+        
+  <Design.PreviewWith>
+    <controls:ActivityListElementControl />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|ActivityListElementControl">
+
+    <Style.Resources>
+
+    </Style.Resources>
+
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid>
+
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="33.3*" MinWidth="160"/>
+            <ColumnDefinition Width="33.4*" MinWidth="160"/>
+            <ColumnDefinition Width="33.3*" MinWidth="160"/>
+          </Grid.ColumnDefinitions>
+        
+          <Image Source="{Binding ModeIcon}" Width="96" Height="96" Grid.Column="0" VerticalAlignment="Center" />
+          <TextBlock Text="{Binding Name}" Width="150" Grid.Column="1" VerticalAlignment="Center" />
+          <TextBlock Text="{Binding Completions}" Width="50" Grid.Column="2" VerticalAlignment="Center" />
+
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>
